@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import 'config';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Outfit', sans-serif;
+}
+
+html,
+body {
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  font-family: 'Inter', sans-serif;
+  background: $background;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+}
+
+// input:focus-within {
+//   text-decoration: underline;
+// }
+
+.icon-nav:hover {
+  fill: $iconNavLinks;
+  transition: fill 300ms ease-in-out;
+}
+
+a.active svg.icon-nav {
+  fill: white;
+}
