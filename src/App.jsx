@@ -1,5 +1,4 @@
 import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider } from 'react-router-dom';
-import { MoviesLoader } from './components/pages/Home';
 
 // components/pages
 import Home from './components/pages/Home';
@@ -11,20 +10,28 @@ import MovieDetail from './components/pages/Movie-Detail';
 // components/layouts
 import RootLayout from './components/layouts/RootLayout';
 import TrendsLayout from './components/layouts/TrendsLayout';
-import PopularLayout from './components/layouts/PopularLayout';
+import PopularLayout from './components/layouts/PopularMoviesLayout';
+import NowPlayingMoviesLayout from './components/layouts/NowPlayingMoviesLayout';
+import TopRatedMoviesLayout from './components/layouts/TopRatedMoviesLayout';
+import UpcomingMoviesLayout from './components/layouts/UpComingMoviesLayout';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
-      {/* change this later to the moviesloader to remove it since it wouldn't work without internet connection and API_KEY */}
-      <Route index element={<Home />} loader={MoviesLoader} />
+      {/* homepage navigation links */}
+      <Route index element={<Home />} />
       <Route path="movies" element={<Movies />} />
       <Route path="tv-shows" element={<TV />} />
+
+      {/* movie details path :id - changing path URL but rendering same page*/}
       <Route path="movie-detail" element={<MovieDetail />} />
 
-      <Route path="movie-trends" element={<TrendsLayout />}></Route>
-
-      <Route path="popular-movies" element={<PopularLayout />}></Route>
+      {/* see more btns */}
+      <Route path="movie-trends" element={<TrendsLayout />} />
+      <Route path="popular-movies" element={<PopularLayout />} />
+      <Route path="now-playing" element={<NowPlayingMoviesLayout />} />
+      <Route path="upcoming-movies" element={<UpcomingMoviesLayout />} />
+      <Route path="toprated-movies" element={<TopRatedMoviesLayout />} />
 
       {/* Custom 404 Page */}
       <Route path="*" element={<NotFound />} />

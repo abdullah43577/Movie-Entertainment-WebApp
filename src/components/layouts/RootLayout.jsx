@@ -22,11 +22,11 @@ export default function RootLayout() {
   };
 
   return (
-    <main className="container flex h-full w-full flex-col items-start gap-[2rem] p-8 xl:flex-row">
+    <main className="container flex h-full w-full flex-col items-start gap-[2rem] p-8 xl:flex-row xl:px-2">
       <nav className="flex w-full items-center justify-between rounded-xl bg-nav p-6 xl:fixed xl:h-[90vh] xl:w-auto xl:flex-col">
         <img src={imageLogo} alt="image logo" />
 
-        <div className="nav_icons flex items-center gap-[2rem] lg:gap-[4rem] xl:flex-col">
+        <div className="nav_icons flex items-center gap-[2rem] sm:gap-[5rem] xl:flex-col">
           <NavLink to="/">
             <svg className="icon-nav w-[20px] cursor-pointer lg:w-[25px]" fill="#5a6a90" height="auto" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path d="M8 0H1C.4 0 0 .4 0 1v7c0 .6.4 1 1 1h7c.6 0 1-.4 1-1V1c0-.6-.4-1-1-1Zm0 11H1c-.6 0-1 .4-1 1v7c0 .6.4 1 1 1h7c.6 0 1-.4 1-1v-7c0-.6-.4-1-1-1ZM19 0h-7c-.6 0-1 .4-1 1v7c0 .6.4 1 1 1h7c.6 0 1-.4 1-1V1c0-.6-.4-1-1-1Zm0 11h-7c-.6 0-1 .4-1 1v7c0 .6.4 1 1 1h7c.6 0 1-.4 1-1v-7c0-.6-.4-1-1-1Z"></path>
@@ -50,7 +50,7 @@ export default function RootLayout() {
         </div>
       </nav>
 
-      <section id="trends" className="w-full md:max-w-full xl:ml-40 xl:max-w-[90%]">
+      <section className="w-full lg:mt-8 lg:max-w-[90%] xl:ml-32">
         <form onSubmit={handleSubmit} className="mb-16 flex items-center justify-between">
           <img src={searchIcon} alt="search icon" className="w-[40px]" />
           <input type="text" placeholder="Search for movies or TV series" className="w-full border-b border-btns bg-transparent p-6 text-xl text-white outline-none" name="search" value={inputValue} onChange={handleInput} />

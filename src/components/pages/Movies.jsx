@@ -1,3 +1,3 @@
 export default function Movies() {
-  return <div>Movie section</div>;
+  return <div>Movies Page</div>;
 }

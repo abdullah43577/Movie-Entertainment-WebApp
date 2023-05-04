@@ -1,3 +1,3 @@
 export default function TV() {
-  return <div>TV section</div>;
+  return <div>TV Page</div>;
 }
