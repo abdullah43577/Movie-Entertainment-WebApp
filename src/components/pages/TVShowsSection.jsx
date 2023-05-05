@@ -163,7 +163,7 @@ export default function TVShowsSection() {
       <div className="trends-hd mt-32 flex items-center justify-between">
         <div className="trend-title flex items-center gap-3">
           <h2 className="text-2xl font-medium text-white lg:text-3xl">Trending</h2>
-          <div className="movieTxt-container rounded-lg bg-white px-4 py-[2px] text-xs text-background lg:text-sm">TV SHOW</div>
+          <div className="movieTxt-container rounded-lg bg-iconNavLink px-4 py-[2px] text-xs text-white lg:text-sm">TV SHOW</div>
         </div>
         <Link to="popular-movies" className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm">
           See more
@@ -176,7 +176,7 @@ export default function TVShowsSection() {
       <div className="trends-hd mt-32 flex items-center justify-between">
         <div className="trend-title flex items-center gap-3">
           <h2 className="text-2xl font-medium text-white lg:text-3xl">Popular</h2>
-          <div className="movieTxt-container rounded-lg bg-white px-4 py-[2px] text-xs text-background lg:text-sm">TV SHOW</div>
+          <div className="movieTxt-container rounded-lg bg-iconNavLink px-4 py-[2px] text-xs text-white lg:text-sm">TV SHOW</div>
         </div>
         <Link to="popular-movies" className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm">
           See more
@@ -189,7 +189,7 @@ export default function TVShowsSection() {
       <div className="trends-hd mt-32 flex items-center justify-between">
         <div className="trend-title flex items-center gap-3">
           <h2 className="text-2xl font-medium text-white lg:text-3xl">Airing Today</h2>
-          <div className="movieTxt-container rounded-lg bg-white px-4 py-[2px] text-xs text-background lg:text-sm">TV SHOW</div>
+          <div className="movieTxt-container rounded-lg bg-iconNavLink px-4 py-[2px] text-xs text-white lg:text-sm">TV SHOW</div>
         </div>
         <Link to="now-playing" className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm">
           See more
@@ -202,7 +202,7 @@ export default function TVShowsSection() {
       <div className="trends-hd mt-32 flex items-center justify-between">
         <div className="trend-title flex items-center gap-3">
           <h2 className="text-2xl font-medium text-white lg:text-3xl">On Air</h2>
-          <div className="movieTxt-container rounded-lg bg-white px-4 py-[2px] text-xs text-background lg:text-sm">TV SHOW</div>
+          <div className="movieTxt-container rounded-lg bg-iconNavLink px-4 py-[2px] text-xs text-white lg:text-sm">TV SHOW</div>
         </div>
         <Link to="upcoming-movies" className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm">
           See more
@@ -215,7 +215,7 @@ export default function TVShowsSection() {
       <div className="trends-hd mt-32 flex items-center justify-between">
         <div className="trend-title flex items-center gap-3">
           <h2 className="text-2xl font-medium text-white lg:text-3xl">Top Rated</h2>
-          <div className="movieTxt-container rounded-lg bg-white px-4 py-[2px] text-xs text-background lg:text-sm">TV SHOW</div>
+          <div className="movieTxt-container rounded-lg bg-iconNavLink px-4 py-[2px] text-xs text-white lg:text-sm">TV SHOW</div>
         </div>
         <Link to="toprated-movies" className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm">
           See more

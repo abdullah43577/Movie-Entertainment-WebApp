@@ -24,7 +24,7 @@ const router = createBrowserRouter(
       <Route path="tvshows-genres" element={<TVGenre />} />
 
       {/* movie details path :id - changing path URL but rendering same page*/}
-      <Route path="movie-detail" element={<MovieDetail />} />
+      <Route path="movie-detail/:id" element={<MovieDetail />} />
 
       {/* see more btns */}
       <Route path="movie-trends" element={<TrendsLayout />} />
