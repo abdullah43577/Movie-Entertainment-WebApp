@@ -3,8 +3,8 @@ import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider } 
 // components/pages
 import Home from './components/pages/Home';
 import NotFound from './components/pages/NotFound';
-import Movies from './components/pages/movies';
-import TV from './components/pages/TV';
+import MoviesGenre from './components/pages/MoviesGenre';
+import TVGenre from './components/pages/TVGenre';
 import MovieDetail from './components/pages/Movie-Detail';
 
 // components/layouts
@@ -20,8 +20,8 @@ const router = createBrowserRouter(
     <Route path="/" element={<RootLayout />}>
       {/* homepage navigation links */}
       <Route index element={<Home />} />
-      <Route path="movies" element={<Movies />} />
-      <Route path="tv-shows" element={<TV />} />
+      <Route path="movies-genres" element={<MoviesGenre />} />
+      <Route path="tvshows-genres" element={<TVGenre />} />
 
       {/* movie details path :id - changing path URL but rendering same page*/}
       <Route path="movie-detail" element={<MovieDetail />} />
