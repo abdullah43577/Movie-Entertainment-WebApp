@@ -71,9 +71,11 @@ a.active svg.icon-nav {
   display: grid;
   gap: 1rem;
   grid-template-columns: repeat(10, 1fr);
+  scroll-snap-type: x mandatory;
 
   > * {
     width: 400px;
+    scroll-snap-align: center;
   }
 
   img {
@@ -98,8 +100,6 @@ a.active svg.icon-nav {
 
 @media (min-width: 768px) {
   .trending-movies-container {
-    display: grid;
-    // grid-template-columns: repeat(10, 1fr);
     gap: 2rem;
     width: 100%;
 

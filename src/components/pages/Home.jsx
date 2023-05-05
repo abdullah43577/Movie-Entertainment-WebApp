@@ -179,7 +179,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="trending-movies-container my-8 items-center overflow-x-scroll">{TrendingMoviesArr}</div>
+      <div className="trending-movies-container my-8 overflow-x-scroll">{TrendingMoviesArr}</div>
 
       {/* popular movies */}
       <div className="trends-hd mt-32 flex items-center justify-between">
