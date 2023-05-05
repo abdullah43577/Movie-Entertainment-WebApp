@@ -50,7 +50,7 @@ export default function RootLayout() {
         </div>
       </nav>
 
-      <section className="w-full lg:mt-8 lg:max-w-[90%] xl:ml-32">
+      <section className="w-full lg:mt-8 xl:ml-32 xl:max-w-[90%]">
         <form onSubmit={handleSubmit} className="mb-16 flex items-center justify-between">
           <img src={searchIcon} alt="search icon" className="w-[40px]" />
           <input type="text" placeholder="Search for movies or TV series" className="w-full border-b border-btns bg-transparent p-6 text-xl text-white outline-none" name="search" value={inputValue} onChange={handleInput} />

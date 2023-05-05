@@ -13,7 +13,7 @@ export default function TVShowsSection() {
   useEffect(() => {
     async function fetchTrendingMovies() {
       try {
-        const trendRes = await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`);
+        const trendRes = await fetch(`https://api.themoviedb.org/3/trending/tv/week?api_key=${API_KEY}`);
         const data = await trendRes.json();
         setTvTrends(data.results);
       } catch (err) {
@@ -28,13 +28,13 @@ export default function TVShowsSection() {
     console.log('movieTrends', tvTrends);
   }, [tvTrends]);
 
-  const trendingTVShows = tvTrends?.slice(0, 10).map((trend) => {
+  const trendingTVShows = tvTrends?.slice(0, 6).map((trend) => {
     const releaseDate = trend.release_date?.slice(0, 4) || trend.first_air_date?.slice(0, 4);
 
     return (
-      <Link to="movie-detail" key={trend.id} id={trend.id}>
-        <div className="card-element relative h-auto cursor-pointer rounded-md bg-nav lg:w-[450px]">
-          <img src={`https://image.tmdb.org/t/p/w500/${trend.backdrop_path}`} alt={trend.title} className="h-full w-full rounded-lg" />
+      <Link to="movie-detail" key={trend.id} id={trend.id} className="linkEl">
+        <div className="card_element relative h-[250px] cursor-pointer rounded-md bg-nav lg:h-[300px]">
+          <img src={`https://image.tmdb.org/t/p/original/${trend.backdrop_path}`} alt={trend.title} className="h-full w-full rounded-lg" />
           <div className="overlay absolute left-0 top-0 h-full w-full bg-[rgba(0,0,0,0.4)]"></div>
           <div className="info_container absolute bottom-6 left-4 text-white">
             <div className="year-container flex items-center gap-3">

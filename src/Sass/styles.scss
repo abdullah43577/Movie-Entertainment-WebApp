@@ -69,20 +69,43 @@ a.active svg.icon-nav {
 
 .trending-movies-container {
   display: grid;
-  // grid-template-columns: 1fr;
-  grid-template-columns: repeat(10, 1fr);
   gap: 1rem;
+  grid-template-columns: repeat(10, 1fr);
+
+  > * {
+    width: 400px;
+  }
+
+  img {
+    height: 100% !important;
+  }
+
+  &::-webkit-scrollbar {
+    height: 5px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
 }
 
 .movies-container {
   display: grid;
   grid-template-columns: 1fr;
+  gap: 1rem;
 }
 
 @media (min-width: 768px) {
   .trending-movies-container {
+    display: grid;
     // grid-template-columns: repeat(10, 1fr);
     gap: 2rem;
+    width: 100%;
+
+    > * {
+      width: 600px;
+    }
   }
 
   .movies-container {
@@ -91,9 +114,18 @@ a.active svg.icon-nav {
   }
 }
 
-@media (min-width: 978px) {
+@media (min-width: 1240px) {
   .movies-container {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+
+    & > :last-child {
+      grid-column: 3/5;
+    }
+  }
+
+  /* Select the second-to-last child element */
+  .linkEl:nth-last-child(2) {
+    grid-column: 1/3;
   }
 }
 
