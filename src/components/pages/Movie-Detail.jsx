@@ -30,6 +30,10 @@ export default function MovieDetail() {
   }, [id]);
 
   useEffect(() => {
+    console.log(movieDetail);
+  }, [movieDetail]);
+
+  useEffect(() => {
     const getCredits = async () => {
       try {
         const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}&language=en-US`);
