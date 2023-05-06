@@ -6,40 +6,61 @@ export default function MovieDetail() {
   const { id } = useParams();
   const [movieDetail, setMovieDetail] = useState([]);
   const [movieCredits, setMovieCredits] = useState([]);
+  // const [movieRatings, setMovieRatings] = useState(0);
+  // const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const renderMovie = async () => {
-      const res = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`);
-      const data = await res.json();
-      setMovieDetail(data);
+      try {
+        // setIsLoading(true);
+        const res = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`);
+        const data = await res.json();
+        setMovieDetail(data);
+
+        // setIsLoading(false);
+      } catch (err) {
+        console.error(err);
+      }
     };
 
     renderMovie();
   }, [id]);
 
   useEffect(() => {
-    console.log(movieDetail);
-  }, [movieDetail]);
-
-  useEffect(() => {
     const getCredits = async () => {
-      const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}&language=en-US`);
-      const data = await res.json();
-      setMovieCredits(data);
+      try {
+        const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}&language=en-US`);
+        const data = await res.json();
+        setMovieCredits(data);
+      } catch (err) {
+        console.error(err);
+      }
     };
 
     getCredits();
   }, [id]);
 
-  // useEffect(() => {
-  //   console.log(movieCredits);
-  // }, [movieCredits]);
+  const getHours = function (mins) {
+    return `${Math.floor(mins / 60)} hrs`;
+  };
+
+  const getMinutes = function (mins) {
+    return `${mins % 60} mins`;
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+
+    const formattedDate = date.toLocaleDateString('en-US', options);
+    return formattedDate;
+  };
 
   return (
-    <div className="detail item-start flex max-w-[90%] justify-center gap-[3rem]">
-      <img src={`https://image.tmdb.org/t/p/original/${movieDetail.poster_path || movieDetail.backdrop_path}`} alt={movieDetail.title} className="mx-auto h-[600px] w-[500px] rounded-lg object-cover" />
+    <div className="detail item-start flex max-w-[90%] flex-col justify-center gap-[3rem] lg:flex-row">
+      <img src={`https://image.tmdb.org/t/p/original/${movieDetail.poster_path || movieDetail.backdrop_path}`} alt={movieDetail.title} className="mx-auto h-[400px] w-full rounded-lg object-cover lg:h-[600px] lg:w-[500px]" />
 
-      <div className="infoContainer flex w-3/5 flex-col gap-[2rem]">
+      <div className="infoContainer flex w-full flex-col gap-[2rem] lg:w-3/5">
         <h2 className="text-5xl">{movieDetail.title || movieDetail.original_title}</h2>
         <span className="text-lg text-gray-500">{movieDetail.tagline}</span>
         <div className="rating flex items-center gap-[0.5rem]">
@@ -67,18 +88,20 @@ export default function MovieDetail() {
             </svg>
           </div>
         </div>
-        <div className="movie-info flex items-center justify-between">
+        <div className="movie-info flex flex-col items-start justify-between gap-[2rem] lg:flex-row lg:items-center lg:gap-0">
           <div className="length">
             <p className="text-lg text-gray-500">Length</p>
-            <span>{movieDetail.runtime} mins</span>
+            <span>
+              {getHours(movieDetail.runtime)} {getMinutes(movieDetail.runtime)}
+            </span>
           </div>
           <div className="language">
             <p className="text-lg text-gray-500">Language</p>
-            {/* <span>{movieDetail.spoken_languages[0]?.name}</span> */}
+            <span>{movieDetail.spoken_languages?.[0]?.name || 'N/A'}</span>
           </div>
           <div className="year">
             <p className="text-lg text-gray-500">Year</p>
-            <span>{movieDetail.release_date?.slice(0, 4)}</span>
+            <span>{formatDate(movieDetail.release_date)}</span>
           </div>
           <div className="status">
             <p className="text-lg text-gray-500">Status</p>

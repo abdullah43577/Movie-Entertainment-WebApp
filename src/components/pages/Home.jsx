@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import movieClip from '../../icons folder/movieClip.svg';
 import { API_KEY } from '../helper/API';
 import TVShows from './TVShowsSection';
+import Loader from '../helper/Loader';
 
 export default function Home() {
   const [movieTrends, setMovieTrends] = useState([]);
@@ -10,9 +11,11 @@ export default function Home() {
   const [nowPlaying, setNowPlaying] = useState([]);
   const [upComing, setUpComing] = useState([]);
   const [topRated, setTopRated] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     async function fetchTrendingMovies() {
+      setIsLoading(true);
       try {
         const trendRes = await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`);
         const data = await trendRes.json();
@@ -33,6 +36,8 @@ export default function Home() {
         const topRatedRes = await fetch(`https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`);
         const data5 = await topRatedRes.json();
         setTopRated(data5.results);
+
+        setIsLoading(false);
       } catch (err) {
         console.error(err);
       }
@@ -175,7 +180,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="trending-movies-container my-8 overflow-x-scroll">{TrendingMoviesArr}</div>
+      <div className="trending-movies-container my-8 overflow-x-scroll">{isLoading ? <Loader /> : TrendingMoviesArr}</div>
 
       {/* popular movies */}
       <div className="trends-hd mt-32 flex items-center justify-between">
@@ -187,8 +192,7 @@ export default function Home() {
           See more
         </Link>
       </div>
-
-      <div className="movies-container my-8">{popularMoviesArr}</div>
+      <div className="movies-container my-8">{isLoading ? <Loader isLoading={isLoading} /> : popularMoviesArr}</div>
 
       {/* Now Playing */}
       <div className="trends-hd mt-32 flex items-center justify-between">
@@ -201,7 +205,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="movies-container my-8">{nowPlayingMoviesArr}</div>
+      <div className="movies-container my-8">{isLoading ? <Loader isLoading={isLoading} /> : nowPlayingMoviesArr}</div>
 
       {/* UpComing */}
       <div className="trends-hd mt-32 flex items-center justify-between">
@@ -214,7 +218,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="movies-container my-8">{upComingMoviesArr}</div>
+      <div className="movies-container my-8">{isLoading ? <Loader isLoading={isLoading} /> : upComingMoviesArr}</div>
 
       {/* Top rated */}
       <div className="trends-hd mt-32 flex items-center justify-between">
@@ -227,7 +231,7 @@ export default function Home() {
         </Link>
       </div>
 
-      <div className="movies-container my-8">{topRatedMoviesArr}</div>
+      <div className="movies-container my-8">{isLoading ? <Loader isLoading={isLoading} /> : topRatedMoviesArr}</div>
 
       <TVShows />
     </>
