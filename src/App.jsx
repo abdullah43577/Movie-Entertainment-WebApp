@@ -6,32 +6,35 @@ import NotFound from './components/pages/NotFound';
 import MoviesGenre from './components/pages/MoviesGenre';
 import TVGenre from './components/pages/TVGenre';
 import MovieDetail from './components/pages/Movie-Detail';
+import TVShowDetail from './components/pages/TVShowDetail';
 
-// components/layouts
+// components/layouts/movies
 import RootLayout from './components/layouts/RootLayout';
-import TrendsLayout from './components/layouts/TrendsLayout';
-import PopularLayout from './components/layouts/PopularMoviesLayout';
-import NowPlayingMoviesLayout from './components/layouts/NowPlayingMoviesLayout';
-import TopRatedMoviesLayout from './components/layouts/TopRatedMoviesLayout';
-import UpcomingMoviesLayout from './components/layouts/UpComingMoviesLayout';
+import TrendsLayout from './components/layouts/movies/TrendsLayout';
+import PopularLayout from './components/layouts/movies/PopularMoviesLayout';
+import NowPlayingMoviesLayout from './components/layouts/movies/NowPlayingMoviesLayout';
+import TopRatedMoviesLayout from './components/layouts/movies/TopRatedMoviesLayout';
+import UpcomingMoviesLayout from './components/layouts/movies/UpComingMoviesLayout';
+
+// components/layouts/TVshows
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       {/* homepage navigation links */}
       <Route index element={<Home />} />
-      <Route path="movies-genres" element={<MoviesGenre />} />
-      <Route path="tvshows-genres" element={<TVGenre />} />
+      <Route path="movies/genres" element={<MoviesGenre />} />
+      <Route path="tv-shows/genres" element={<TVGenre />} />
 
-      {/* movie details path :id - changing path URL but rendering same page*/}
-      <Route path="movie-detail/:id" element={<MovieDetail />} />
+      <Route path="movies/:id" element={<MovieDetail />} />
+      <Route path="tv-shows/:id" element={<TVShowDetail />} />
 
       {/* see more btns */}
-      <Route path="movie-trends" element={<TrendsLayout />} />
-      <Route path="popular-movies" element={<PopularLayout />} />
-      <Route path="now-playing" element={<NowPlayingMoviesLayout />} />
-      <Route path="upcoming-movies" element={<UpcomingMoviesLayout />} />
-      <Route path="toprated-movies" element={<TopRatedMoviesLayout />} />
+      <Route path="movies/trends" element={<TrendsLayout />} />
+      <Route path="movies/popular-movies" element={<PopularLayout />} />
+      <Route path="movies/now-playing" element={<NowPlayingMoviesLayout />} />
+      <Route path="movies/upcoming-movies" element={<UpcomingMoviesLayout />} />
+      <Route path="movies/toprated-movies" element={<TopRatedMoviesLayout />} />
 
       {/* Custom 404 Page */}
       <Route path="*" element={<NotFound />} />

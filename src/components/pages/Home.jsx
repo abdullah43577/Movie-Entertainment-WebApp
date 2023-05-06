@@ -14,9 +14,10 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchTrendingMovies() {
-      setIsLoading(true);
+    async function fetchMovies() {
       try {
+        setIsLoading(true);
+
         const trendRes = await fetch(`https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`);
         const data = await trendRes.json();
         setMovieTrends(data.results);
@@ -43,18 +44,14 @@ export default function Home() {
       }
     }
 
-    fetchTrendingMovies();
+    fetchMovies();
   }, []);
-
-  useEffect(() => {
-    console.log(movieTrends);
-  }, [movieTrends]);
 
   const TrendingMoviesArr = movieTrends?.slice(0, 10).map((trend) => {
     const releaseDate = trend.release_date?.slice(0, 4) || trend.first_air_date?.slice(0, 4);
 
     return (
-      <Link to={`movie-detail/${trend.id}`} key={trend.id} id={trend.id}>
+      <Link to={`movies/${trend.id}`} key={trend.id} id={trend.id}>
         <div className="card_element relative h-[250px] cursor-pointer overflow-hidden rounded-md bg-nav lg:h-[300px]">
           <img src={`https://image.tmdb.org/t/p/w500/${trend.backdrop_path || trend.poster_path}`} alt={trend.title} className="h-auto w-full rounded-lg" />
           <div className="overlay absolute left-0 top-0 h-full w-full bg-[rgba(0,0,0,0.4)]"></div>
@@ -78,7 +75,7 @@ export default function Home() {
     const releaseDate = movie.release_date?.slice(0, 4) || movie.first_air_date?.slice(0, 4);
 
     return (
-      <Link to={`movie-detail/${movie.id}`} key={movie.id} id={movie.id} className="linkEl">
+      <Link to={`movies/${movie.id}`} key={movie.id} id={movie.id} className="linkEl">
         <div className="card_element relative mx-auto h-[250px] rounded-md bg-nav lg:h-[300px]">
           <img src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path || movie.poster_path}`} alt={movie.title} className="h-full w-full rounded-lg" />
           <div className="overlay absolute left-0 top-0 h-full w-full bg-[rgba(0,0,0,0.4)]"></div>
@@ -102,7 +99,7 @@ export default function Home() {
     const releaseDate = playing.release_date?.slice(0, 4) || playing.first_air_date?.slice(0, 4);
 
     return (
-      <Link to={`movie-detail/${playing.id}`} key={playing.id} id={playing.id} className="linkEl">
+      <Link to={`movies/${playing.id}`} key={playing.id} id={playing.id} className="linkEl">
         <div className="card_element relative mx-auto h-[250px] w-full rounded-md bg-nav lg:h-[300px]">
           <img src={`https://image.tmdb.org/t/p/original/${playing.backdrop_path || playing.poster_path}`} alt={playing.title} className="h-full w-full rounded-lg" />
           <div className="overlay absolute left-0 top-0 h-full w-full bg-[rgba(0,0,0,0.4)]"></div>
@@ -125,7 +122,7 @@ export default function Home() {
     const releaseDate = upcoming.release_date?.slice(0, 4) || upcoming.first_air_date?.slice(0, 4);
 
     return (
-      <Link to={`movie-detail/${upcoming.id}`} key={upcoming.id} id={upcoming.id} className="linkEl">
+      <Link to={`movies/${upcoming.id}`} key={upcoming.id} id={upcoming.id} className="linkEl">
         <div className="card_element relative mx-auto h-[250px] w-full rounded-md bg-nav lg:h-[300px]">
           <img src={`https://image.tmdb.org/t/p/original/${upcoming.backdrop_path || upcoming.poster_path}`} alt={upcoming.title} className="h-full w-full rounded-lg" />
           <div className="overlay absolute left-0 top-0 h-full w-full bg-[rgba(0,0,0,0.4)]"></div>
@@ -148,7 +145,7 @@ export default function Home() {
     const releaseDate = topRated.release_date?.slice(0, 4) || topRated.first_air_date?.slice(0, 4);
 
     return (
-      <Link to={`movie-detail/${topRated.id}`} key={topRated.id} id={topRated.id} className="linkEl">
+      <Link to={`movies/${topRated.id}`} key={topRated.id} id={topRated.id} className="linkEl">
         <div className="card_element relative mx-auto h-[250px] w-full rounded-md bg-nav lg:h-[300px]">
           <img src={`https://image.tmdb.org/t/p/original/${topRated.backdrop_path || topRated.poster_path}`} alt={topRated.title} className="h-full w-full rounded-lg" />
           <div className="overlay absolute left-0 top-0 h-full w-full bg-[rgba(0,0,0,0.4)]"></div>
@@ -175,12 +172,12 @@ export default function Home() {
           <h2 className="text-2xl font-medium text-white lg:text-3xl">Trending</h2>
           <div className="movieTxt-container rounded-lg border-2 border-white px-4 py-[2px] text-xs text-white lg:text-sm">MOVIE</div>
         </div>
-        <Link to="movie-trends" className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm">
+        <Link to="movies/trends" className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm">
           See more
         </Link>
       </div>
 
-      <div className="trending-movies-container my-8 overflow-x-scroll">{isLoading ? <Loader /> : TrendingMoviesArr}</div>
+      <div className="trending-movies-container my-8 overflow-x-scroll">{isLoading ? <Loader isLoading={isLoading} /> : TrendingMoviesArr}</div>
 
       {/* popular movies */}
       <div className="trends-hd mt-32 flex items-center justify-between">
@@ -188,7 +185,7 @@ export default function Home() {
           <h2 className="text-2xl font-medium text-white lg:text-3xl">Popular</h2>
           <div className="movieTxt-container rounded-lg border-2 border-white px-4 py-[2px] text-xs text-white lg:text-sm">MOVIE</div>
         </div>
-        <Link to="popular-movies" className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm">
+        <Link to="movies/popular-movies" className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm">
           See more
         </Link>
       </div>
@@ -200,7 +197,7 @@ export default function Home() {
           <h2 className="text-2xl font-medium text-white lg:text-3xl">Now Playing</h2>
           <div className="movieTxt-container rounded-lg border-2 border-white px-4 py-[2px] text-xs text-white lg:text-sm">MOVIE</div>
         </div>
-        <Link to="now-playing" className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm">
+        <Link to="movies/now-playing" className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm">
           See more
         </Link>
       </div>
@@ -213,7 +210,7 @@ export default function Home() {
           <h2 className="text-2xl font-medium text-white lg:text-3xl">Upcoming</h2>
           <div className="movieTxt-container rounded-lg border-2 border-white px-4 py-[2px] text-xs text-white lg:text-sm">MOVIE</div>
         </div>
-        <Link to="upcoming-movies" className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm">
+        <Link to="movies/upcoming-movies" className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm">
           See more
         </Link>
       </div>
@@ -226,7 +223,7 @@ export default function Home() {
           <h2 className="text-2xl font-medium text-white lg:text-3xl">Top Rated</h2>
           <div className="movieTxt-container rounded-lg border-2 border-white px-4 py-[2px] text-xs text-white lg:text-sm">MOVIE</div>
         </div>
-        <Link to="toprated-movies" className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm">
+        <Link to="movies/toprated-movies" className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm">
           See more
         </Link>
       </div>

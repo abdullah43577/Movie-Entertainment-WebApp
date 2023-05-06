@@ -3,22 +3,25 @@ import { useParams } from 'react-router-dom';
 import { API_KEY } from '../helper/API';
 import Loader from '../helper/Loader';
 
-export default function MovieDetail() {
+export default function TVShowDetail() {
   const { id } = useParams();
-  const [movieDetail, setMovieDetail] = useState([]);
+
+  const [tvShowDetail, setTVShowDetail] = useState([]);
   const [movieCredits, setMovieCredits] = useState([]);
   // const [movieRatings, setMovieRatings] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [imageLoading, setImageLoading] = useState(true);
+  const [isLoadingImage, setIsLoadingImage] = useState(true);
+
+  const handleImageLoad = () => setIsLoadingImage(false);
 
   useEffect(() => {
     const renderMovie = async () => {
       try {
         setIsLoading(true);
 
-        const res = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`);
+        const res = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}&language=en-US`);
         const data = await res.json();
-        setMovieDetail(data);
+        setTVShowDetail(data);
 
         setIsLoading(false);
       } catch (err) {
@@ -32,7 +35,7 @@ export default function MovieDetail() {
   useEffect(() => {
     const getCredits = async () => {
       try {
-        const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}&language=en-US`);
+        const res = await fetch(`https://api.themoviedb.org/3/tv/${id}/credits?api_key=${API_KEY}&language=en-US`);
         const data = await res.json();
         setMovieCredits(data);
       } catch (err) {
@@ -43,13 +46,9 @@ export default function MovieDetail() {
     getCredits();
   }, [id]);
 
-  const getHours = function (mins) {
-    return `${Math.floor(mins / 60)} hrs`;
-  };
-
-  const getMinutes = function (mins) {
-    return `${mins % 60} mins`;
-  };
+  useEffect(() => {
+    console.log('movieCredits', movieCredits);
+  }, [movieCredits]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -59,25 +58,22 @@ export default function MovieDetail() {
     return formattedDate;
   };
 
-  const handleImageLoad = function () {
-    setImageLoading(false);
-  };
-
   return (
     <div className="detail item-start flex max-w-[90%] flex-col justify-center gap-[3rem] lg:flex-row">
-      <div className={`img h-[400px] w-full items-center justify-center rounded-lg bg-btns lg:h-[600px] lg:w-[500px] ${imageLoading ? 'flex' : ''}`}>
-        {imageLoading && <Loader isLoading={isLoading} />}
+      <div className={`img h-[400px] w-full items-center justify-center rounded-lg bg-btns lg:h-[600px] lg:w-[500px] ${isLoadingImage ? 'flex' : ''}`}>
+        {isLoadingImage && <Loader />}
+
         <img
-          src={`https://image.tmdb.org/t/p/original/${movieDetail.poster_path || movieDetail.backdrop_path}`}
-          alt={movieDetail.title}
-          className={`mx-auto h-full w-full rounded-lg object-cover ${imageLoading ? 'hidden' : 'block'}`}
+          src={`https://image.tmdb.org/t/p/original/${tvShowDetail.poster_path || tvShowDetail.backdrop_path}`}
+          alt={tvShowDetail.title}
+          className={`mx-auto h-full w-full rounded-lg object-cover ${isLoadingImage ? 'hidden' : 'block'}`}
           onLoad={handleImageLoad}
         />
       </div>
 
       <div className="infoContainer flex w-full flex-col gap-[2rem] lg:w-3/5">
-        <h2 className="text-2xl md:text-3xl lg:text-5xl">{isLoading ? <Loader isLoading={isLoading} /> : movieDetail.title || movieDetail.original_title}</h2>
-        <span className="text-lg text-gray-500">{isLoading ? <Loader isLoading={isLoading} /> : movieDetail.tagline}</span>
+        <h2 className="text-2xl md:text-3xl lg:text-5xl">{tvShowDetail.name || 'N/A'}</h2>
+        <span className="text-lg text-gray-500">{tvShowDetail.tagline}</span>
         <div className="rating flex items-center gap-[0.5rem]">
           <p className="text-2xl font-bold">4.3</p>
 
@@ -103,33 +99,50 @@ export default function MovieDetail() {
             </svg>
           </div>
         </div>
-        <div className="movie-info flex flex-col items-start justify-between gap-[2rem] lg:flex-row lg:items-center lg:gap-0">
-          <div className="length">
-            <p className="text-lg text-gray-500">Length</p>
-            <span>
-              {isLoading ? <Loader isLoading={isLoading} /> : getHours(movieDetail.runtime)} {getMinutes(movieDetail.runtime)}
-            </span>
+        <div className="movie-info flex flex-col flex-wrap items-start gap-[2rem] lg:flex-row lg:items-center">
+          <div className="firstAir">
+            <p className="text-lg text-gray-500">First Air</p>
+            <span>{formatDate(tvShowDetail.first_air_date)}</span>
           </div>
           <div className="language">
             <p className="text-lg text-gray-500">Language</p>
-            <span>{isLoading ? <Loader isLoading={isLoading} /> : movieDetail.spoken_languages?.[0]?.name || 'N/A'}</span>
+            <span>{isLoading ? <Loader /> : tvShowDetail.spoken_languages?.[0]?.english_name || tvShowDetail.spoken_languages?.[0]?.name}</span>
           </div>
-          <div className="year">
-            <p className="text-lg text-gray-500">Year</p>
-            <span>{isLoading ? <Loader isLoading={isLoading} /> : formatDate(movieDetail.release_date)}</span>
+
+          <div className="episodeRunTime">
+            <p className="text-lg text-gray-500">Episodes Runtime</p>
+            <span>
+              {isLoading ? <Loader /> : tvShowDetail.episode_run_time?.[0]} {tvShowDetail.episode_run_time > 60 ? 'hrs' : 'mins'}
+            </span>
           </div>
+
+          <div className="Seasons">
+            <p className="text-lg text-gray-500">Seasons</p>
+            <span>{isLoading ? <Loader /> : tvShowDetail.number_of_seasons}</span>
+          </div>
+
+          <div className="Episodes">
+            <p className="text-lg text-gray-500">Episodes</p>
+            <span>{isLoading ? <Loader /> : tvShowDetail.number_of_episodes}</span>
+          </div>
+
+          <div className="lastAirDate">
+            <p className="text-lg text-gray-500">Last Air</p>
+            <span>{isLoading ? <Loader /> : formatDate(tvShowDetail.last_air_date)}</span>
+          </div>
+
           <div className="status">
             <p className="text-lg text-gray-500">Status</p>
-            <span>{isLoading ? <Loader isLoading={isLoading} /> : movieDetail.status || 'N/A'}</span>
+            <span>{isLoading ? <Loader /> : tvShowDetail.status || 'N/A'}</span>
           </div>
         </div>
 
         <div className="genres">
           <h3 className="mb-2 text-lg font-bold">Genres</h3>
           <div className="genre flex flex-wrap gap-[0.5rem]">
-            {movieDetail.genres?.map((genre) => (
+            {tvShowDetail.genres?.map((genre) => (
               <p className="cursor-pointer rounded-md border border-white bg-white px-2 py-1 text-base font-bold text-background hover:bg-transparent hover:text-white" key={genre.id}>
-                {isLoading ? <Loader isLoading={isLoading} /> : genre.name}
+                {isLoading ? <Loader /> : genre.name}
               </p>
             ))}
           </div>
@@ -138,17 +151,21 @@ export default function MovieDetail() {
         <div className="synopsis">
           <h3 className="mb-2 text-lg font-bold">Synopsis</h3>
 
-          <p>{isLoading ? <Loader isLoading={isLoading} /> : movieDetail.overview}</p>
+          <p>{isLoading ? <Loader /> : tvShowDetail.overview}</p>
         </div>
 
         <div className="casts">
           <h3 className="mb-2 text-lg font-bold">Casts</h3>
           <div className="cast-container flex flex-wrap gap-[0.5rem]">
-            {movieCredits.cast?.map((cast) => (
-              <span className="cursor-pointer rounded-md border border-white px-2 py-1 font-bold hover:bg-white hover:text-background" key={cast.id}>
-                {isLoading ? <Loader isLoading={isLoading} /> : cast.name}
-              </span>
-            ))}
+            {isLoading ? (
+              <Loader />
+            ) : (
+              movieCredits.cast?.map((cast) => (
+                <span className="cursor-pointer rounded-md border border-white px-2 py-1 font-bold hover:bg-white hover:text-background" key={cast.id}>
+                  {cast.name}
+                </span>
+              )) || 'N/A'
+            )}
           </div>
         </div>
       </div>

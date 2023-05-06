@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BeatLoader } from 'react-spinners';
+import { useMediaQuery } from '@react-hook/media-query';
 
 const override = {
   display: 'block',
@@ -8,7 +9,11 @@ const override = {
 };
 
 export default function Loader({ isLoading }) {
+  const isMobile = useMediaQuery('(max-width: 486px)');
+
+  const loaderSize = isMobile ? 50 : 100;
+
   let [color, setColor] = useState('#171e31');
 
-  return <BeatLoader color={color} loading={isLoading} cssOverride={override} size={100} aria-label="Loading Spinner" data-testid="loader" />;
+  return <BeatLoader color={color} loading={isLoading} cssOverride={override} size={loaderSize} aria-label="Loading Spinner" data-testid="loader" />;
 }
