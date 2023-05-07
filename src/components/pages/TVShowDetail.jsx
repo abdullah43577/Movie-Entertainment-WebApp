@@ -61,7 +61,7 @@ export default function TVShowDetail() {
   return (
     <div className="detail item-start flex max-w-[90%] flex-col justify-center gap-[3rem] lg:flex-row">
       <div className={`img h-[400px] w-full items-center justify-center rounded-lg bg-btns lg:h-[600px] lg:w-[500px] ${isLoadingImage ? 'flex' : ''}`}>
-        {isLoadingImage && <Loader />}
+        {isLoadingImage && <Loader isLoading={isLoadingImage} />}
 
         <img
           src={`https://image.tmdb.org/t/p/original/${tvShowDetail.poster_path || tvShowDetail.backdrop_path}`}
@@ -106,34 +106,34 @@ export default function TVShowDetail() {
           </div>
           <div className="language">
             <p className="text-lg text-gray-500">Language</p>
-            <span>{isLoading ? <Loader /> : tvShowDetail.spoken_languages?.[0]?.english_name || tvShowDetail.spoken_languages?.[0]?.name}</span>
+            <span>{isLoading ? <Loader isLoading={isLoading} /> : tvShowDetail.spoken_languages?.[0]?.english_name || tvShowDetail.spoken_languages?.[0]?.name}</span>
           </div>
 
           <div className="episodeRunTime">
             <p className="text-lg text-gray-500">Episodes Runtime</p>
             <span>
-              {isLoading ? <Loader /> : tvShowDetail.episode_run_time?.[0]} {tvShowDetail.episode_run_time > 60 ? 'hrs' : 'mins'}
+              {isLoading ? <Loader isLoading={isLoading} /> : tvShowDetail.episode_run_time?.[0]} {tvShowDetail.episode_run_time > 60 ? 'hrs' : 'mins'}
             </span>
           </div>
 
           <div className="Seasons">
             <p className="text-lg text-gray-500">Seasons</p>
-            <span>{isLoading ? <Loader /> : tvShowDetail.number_of_seasons}</span>
+            <span>{isLoading ? <Loader isLoading={isLoading} /> : tvShowDetail.number_of_seasons}</span>
           </div>
 
           <div className="Episodes">
             <p className="text-lg text-gray-500">Episodes</p>
-            <span>{isLoading ? <Loader /> : tvShowDetail.number_of_episodes}</span>
+            <span>{isLoading ? <Loader isLoading={isLoading} /> : tvShowDetail.number_of_episodes}</span>
           </div>
 
           <div className="lastAirDate">
             <p className="text-lg text-gray-500">Last Air</p>
-            <span>{isLoading ? <Loader /> : formatDate(tvShowDetail.last_air_date)}</span>
+            <span>{isLoading ? <Loader isLoading={isLoading} /> : formatDate(tvShowDetail.last_air_date)}</span>
           </div>
 
           <div className="status">
             <p className="text-lg text-gray-500">Status</p>
-            <span>{isLoading ? <Loader /> : tvShowDetail.status || 'N/A'}</span>
+            <span>{isLoading ? <Loader isLoading={isLoading} /> : tvShowDetail.status || 'N/A'}</span>
           </div>
         </div>
 
@@ -142,7 +142,7 @@ export default function TVShowDetail() {
           <div className="genre flex flex-wrap gap-[0.5rem]">
             {tvShowDetail.genres?.map((genre) => (
               <p className="cursor-pointer rounded-md border border-white bg-white px-2 py-1 text-base font-bold text-background hover:bg-transparent hover:text-white" key={genre.id}>
-                {isLoading ? <Loader /> : genre.name}
+                {isLoading ? <Loader isLoading={isLoading} /> : genre.name}
               </p>
             ))}
           </div>
@@ -151,14 +151,14 @@ export default function TVShowDetail() {
         <div className="synopsis">
           <h3 className="mb-2 text-lg font-bold">Synopsis</h3>
 
-          <p>{isLoading ? <Loader /> : tvShowDetail.overview}</p>
+          <p>{isLoading ? <Loader isLoading={isLoading} /> : tvShowDetail.overview}</p>
         </div>
 
         <div className="casts">
           <h3 className="mb-2 text-lg font-bold">Casts</h3>
           <div className="cast-container flex flex-wrap gap-[0.5rem]">
             {isLoading ? (
-              <Loader />
+              <Loader isLoading={isLoading} />
             ) : (
               movieCredits.cast?.map((cast) => (
                 <span className="cursor-pointer rounded-md border border-white px-2 py-1 font-bold hover:bg-white hover:text-background" key={cast.id}>
