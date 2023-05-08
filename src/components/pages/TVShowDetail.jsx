@@ -2,15 +2,16 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { API_KEY } from '../helper/API';
 import Loader from '../helper/Loader';
+import Rating from '../helper/Rating';
 
 export default function TVShowDetail() {
   const { id } = useParams();
 
   const [tvShowDetail, setTVShowDetail] = useState([]);
   const [movieCredits, setMovieCredits] = useState([]);
-  // const [movieRatings, setMovieRatings] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingImage, setIsLoadingImage] = useState(true);
+  const [voteAvg, setVoteAvg] = useState(0);
 
   const handleImageLoad = () => setIsLoadingImage(false);
 
@@ -22,6 +23,7 @@ export default function TVShowDetail() {
         const res = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}&language=en-US`);
         const data = await res.json();
         setTVShowDetail(data);
+        setVoteAvg(data.vote_average);
 
         setIsLoading(false);
       } catch (err) {
@@ -75,29 +77,9 @@ export default function TVShowDetail() {
         <h2 className="text-2xl md:text-3xl lg:text-5xl">{tvShowDetail.name || 'N/A'}</h2>
         <span className="text-lg text-gray-500">{tvShowDetail.tagline}</span>
         <div className="rating flex items-center gap-[0.5rem]">
-          <p className="text-2xl font-bold">4.3</p>
+          <p className="text-2xl font-bold">{(voteAvg / 2).toFixed(1) || 'N/A'}</p>
 
-          <div className="stars flex items-center">
-            <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-              <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
-            </svg>
-
-            <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-              <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
-            </svg>
-
-            <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-              <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
-            </svg>
-
-            <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-              <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
-            </svg>
-
-            <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-              <path d="M259.3 17.8L194 150.2 47.9 171.5c-26.2 3.8-36.7 36.1-17.7 54.6l105.7 103-25 145.5c-4.5 26.3 23.2 46 46.4 33.7L288 439.6l130.7 68.7c23.2 12.2 50.9-7.4 46.4-33.7l-25-145.5 105.7-103c19-18.5 8.5-50.8-17.7-54.6L382 150.2 316.7 17.8c-11.7-23.6-45.6-23.9-57.4 0z"></path>
-            </svg>
-          </div>
+          <Rating voteAvg={voteAvg} />
         </div>
         <div className="movie-info flex flex-col flex-wrap items-start gap-[2rem] lg:flex-row lg:items-center">
           <div className="firstAir">

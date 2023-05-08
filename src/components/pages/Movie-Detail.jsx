@@ -8,7 +8,6 @@ export default function MovieDetail() {
   const { id } = useParams();
   const [movieDetail, setMovieDetail] = useState([]);
   const [movieCredits, setMovieCredits] = useState([]);
-  // const [movieRatings, setMovieRatings] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [imageLoading, setImageLoading] = useState(true);
   const [voteAvg, setVoteAvg] = useState(0);
@@ -21,6 +20,7 @@ export default function MovieDetail() {
         const res = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`);
         const data = await res.json();
         setMovieDetail(data);
+        setVoteAvg(data.vote_average);
 
         setIsLoading(false);
       } catch (err) {
@@ -30,8 +30,6 @@ export default function MovieDetail() {
 
     renderMovie();
   }, [id]);
-
-  setVoteAvg(movieDetail?.vote_average);
 
   useEffect(() => {
     const getCredits = async () => {
@@ -92,14 +90,17 @@ export default function MovieDetail() {
               {isLoading ? <Loader isLoading={isLoading} /> : getHours(movieDetail.runtime)} {getMinutes(movieDetail.runtime)}
             </span>
           </div>
+
           <div className="language">
             <p className="text-lg text-gray-500">Language</p>
-            <span>{isLoading ? <Loader isLoading={isLoading} /> : movieDetail.spoken_languages?.[0]?.name || 'N/A'}</span>
+            <span>{isLoading ? <Loader isLoading={isLoading} /> : movieDetail.spoken_languages?.[0].name || 'N/A'}</span>
           </div>
+
           <div className="year">
             <p className="text-lg text-gray-500">Year</p>
             <span>{isLoading ? <Loader isLoading={isLoading} /> : formatDate(movieDetail.release_date)}</span>
           </div>
+
           <div className="status">
             <p className="text-lg text-gray-500">Status</p>
             <span>{isLoading ? <Loader isLoading={isLoading} /> : movieDetail.status || 'N/A'}</span>
@@ -126,11 +127,15 @@ export default function MovieDetail() {
         <div className="casts">
           <h3 className="mb-2 text-lg font-bold">Casts</h3>
           <div className="cast-container flex flex-wrap gap-[0.5rem]">
-            {movieCredits.cast?.map((cast) => (
-              <span className="cursor-pointer rounded-md border border-white px-2 py-1 font-bold hover:bg-white hover:text-background" key={cast.id}>
-                {isLoading ? <Loader isLoading={isLoading} /> : cast.name}
-              </span>
-            ))}
+            {isLoading ? (
+              <Loader isLoading={isLoading} />
+            ) : (
+              movieCredits.cast?.map((cast) => (
+                <span className="cursor-pointer rounded-md border border-white px-2 py-1 font-bold hover:bg-white hover:text-background" key={cast.id}>
+                  {cast.name}
+                </span>
+              )) || 'N/A'
+            )}
           </div>
         </div>
       </div>

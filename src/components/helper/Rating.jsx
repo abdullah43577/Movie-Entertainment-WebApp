@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 
 export default function Rating({ voteAvg }) {
@@ -23,7 +25,7 @@ export default function Rating({ voteAvg }) {
     if (fractionalPart >= 5) {
       updatedStars[wholeNumberRating] = (
         <svg className="starActive" stroke="currentColor" fill="#171e31" strokeWidth="0" viewBox="0 0 576 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
-          <path d="M136.3 497.2c-3.7 0-7.3-1.3-10.2-3.9L0 328.9c-7.1-6.6-6.3-17.7 1.8-23.3l106.6-78.5L64 78.3C62 70.5 66.7 62 74.8 59.9l125.6-31.4c7.9-2 16.2 3.2 18.2 11.2l29.7 118.8 118.8 29.7c8 2 13.2 10.3 11.2 18.2l-31.4 125.6c-2 8-10.5 12.7-18.5 10.7l-125.6-31.4L69.1 477.5c-2.4 3.4-5.9 5.6-9.5 6.2-1.1.2-2.3.3-3.5.3z" />
+          <path d="M136.3 497.2c-3.7 0-7.3-1.3-10.2-3.9L0 328.9c-7.1-6.6-6.3-17.7 1.8-23.3l106.6-78.5L64 78.3C62 70.5 66.7 62 74.8 59.9l125.6-31.4c7.9-2 16.2 3.2 18.2 11.2l29.7 118.8 118.8 29.7c8 2 13.2 10.3 11.2 18.2l-31.4 125.6c-2 8-10.5 12.7-18.5 10.7l-125.6-31.4L69.1 477.5c-2.4 3.4-5.9 5.6-9.5 6.2-1.1.2-2.3.3-3.5.3z"></path>
         </svg>
       );
     }
