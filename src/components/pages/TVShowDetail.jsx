@@ -48,10 +48,6 @@ export default function TVShowDetail() {
     getCredits();
   }, [id]);
 
-  useEffect(() => {
-    console.log('movieCredits', movieCredits);
-  }, [movieCredits]);
-
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const options = { day: 'numeric', month: 'long', year: 'numeric' };
@@ -62,7 +58,7 @@ export default function TVShowDetail() {
 
   return (
     <div className="detail item-start flex max-w-[90%] flex-col justify-center gap-[3rem] lg:flex-row">
-      <div className={`img h-[400px] w-full items-center justify-center rounded-lg bg-btns lg:h-[600px] lg:w-[500px] ${isLoadingImage ? 'flex' : ''}`}>
+      <div className={`img h-[400px] w-full items-center justify-center rounded-lg bg-btns lg:h-[700px] lg:w-[500px] ${isLoadingImage ? 'flex' : ''}`}>
         {isLoadingImage && <Loader isLoading={isLoadingImage} />}
 
         <img
@@ -86,6 +82,7 @@ export default function TVShowDetail() {
             <p className="text-lg text-gray-500">First Air</p>
             <span>{formatDate(tvShowDetail.first_air_date)}</span>
           </div>
+
           <div className="language">
             <p className="text-lg text-gray-500">Language</p>
             <span>{isLoading ? <Loader isLoading={isLoading} /> : tvShowDetail.spoken_languages?.[0]?.english_name || tvShowDetail.spoken_languages?.[0]?.name}</span>
@@ -108,14 +105,14 @@ export default function TVShowDetail() {
             <span>{isLoading ? <Loader isLoading={isLoading} /> : tvShowDetail.number_of_episodes}</span>
           </div>
 
-          <div className="lastAirDate">
-            <p className="text-lg text-gray-500">Last Air</p>
-            <span>{isLoading ? <Loader isLoading={isLoading} /> : formatDate(tvShowDetail.last_air_date)}</span>
-          </div>
-
           <div className="status">
             <p className="text-lg text-gray-500">Status</p>
             <span>{isLoading ? <Loader isLoading={isLoading} /> : tvShowDetail.status || 'N/A'}</span>
+          </div>
+
+          <div className="lastAirDate">
+            <p className="text-lg text-gray-500">Last Air</p>
+            <span>{isLoading ? <Loader isLoading={isLoading} /> : formatDate(tvShowDetail.last_air_date)}</span>
           </div>
         </div>
 

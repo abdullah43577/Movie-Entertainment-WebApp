@@ -65,7 +65,7 @@ export default function MovieDetail() {
 
   return (
     <div className="detail item-start flex max-w-[90%] flex-col justify-center gap-[3rem] lg:flex-row">
-      <div className={`img h-[400px] w-full items-center justify-center rounded-lg bg-btns lg:h-[600px] lg:w-[500px] ${imageLoading ? 'flex' : ''}`}>
+      <div className={`img h-[400px] w-full items-center justify-center rounded-lg bg-btns lg:h-[700px] lg:w-[500px] ${imageLoading ? 'flex' : ''}`}>
         {imageLoading && <Loader isLoading={imageLoading} />}
         <img
           src={`https://image.tmdb.org/t/p/original/${movieDetail.poster_path || movieDetail.backdrop_path}`}
