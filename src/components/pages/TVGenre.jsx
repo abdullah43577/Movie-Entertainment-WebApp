@@ -7,10 +7,15 @@ export default function TVGenre() {
 
   useEffect(() => {
     const getTVGenre = async () => {
-      const res = await fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}&language=en-US`);
-      const data = await res.json();
-      setTVGenre(data.genres);
+      try {
+        const res = await fetch(`https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}&language=en-US`);
+        const data = await res.json();
+        setTVGenre(data.genres);
+      } catch (err) {
+        console.error(err);
+      }
     };
+
     getTVGenre();
   }, []);
 
@@ -20,8 +25,8 @@ export default function TVGenre() {
 
   const TVGenresArr = tvGenre?.map((genre) => {
     return (
-      <Link to="genre/tv" key={genre.id} id={genre.id} className="rounded-lg">
-        <div className="flex h-[150px] items-center justify-center text-center font-bold lg:text-xl">{genre.name}</div>
+      <Link to={`${genre.name}/${genre.id}`} key={genre.id} id={genre.id} className="rounded-lg">
+        <div className="flex h-[150px] items-center justify-center px-2 text-center font-bold lg:text-xl">{genre.name}</div>
       </Link>
     );
   });

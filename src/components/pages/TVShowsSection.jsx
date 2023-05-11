@@ -50,7 +50,7 @@ export default function TVShowsSection() {
     const releaseDate = trend.release_date?.slice(0, 4) || trend.first_air_date?.slice(0, 4);
 
     return (
-      <Link to={`tv-shows/${trend.id}`} key={trend.id} id={trend.id}>
+      <Link to={`tv/${trend.id}`} key={trend.id} id={trend.id}>
         <div className="card_element relative h-[250px] cursor-pointer overflow-hidden rounded-md bg-nav lg:h-[300px]">
           <img src={`https://image.tmdb.org/t/p/original/${trend.backdrop_path || trend.poster_path}`} alt={trend.title} className="h-auto w-full rounded-lg" />
           <div className="overlay absolute left-0 top-0 h-full w-full bg-[rgba(0,0,0,0.4)]"></div>
@@ -74,7 +74,7 @@ export default function TVShowsSection() {
     const releaseDate = movie.release_date?.slice(0, 4) || movie.first_air_date?.slice(0, 4);
 
     return (
-      <Link to={`tv-shows/${movie.id}`} key={movie.id} id={movie.id} className="linkEl">
+      <Link to={`tv/${movie.id}`} key={movie.id} id={movie.id} className="linkEl">
         <div className="card_element relative mx-auto h-[250px] rounded-md bg-nav lg:h-[300px]">
           <img src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path || movie.poster_path}`} alt={movie.title} className="h-full w-full rounded-lg" />
           <div className="overlay absolute left-0 top-0 h-full w-full bg-[rgba(0,0,0,0.4)]"></div>
@@ -98,7 +98,7 @@ export default function TVShowsSection() {
     const releaseDate = playing.release_date?.slice(0, 4) || playing.first_air_date?.slice(0, 4);
 
     return (
-      <Link to={`tv-shows/${playing.id}`} key={playing.id} id={playing.id} className="linkEl">
+      <Link to={`tv/${playing.id}`} key={playing.id} id={playing.id} className="linkEl">
         <div className="card_element relative mx-auto h-[250px] w-full rounded-md bg-nav lg:h-[300px]">
           <img src={`https://image.tmdb.org/t/p/original/${playing.backdrop_path || playing.poster_path}`} alt={playing.title} className="h-full w-full rounded-lg" />
           <div className="overlay absolute left-0 top-0 h-full w-full bg-[rgba(0,0,0,0.4)]"></div>
@@ -121,7 +121,7 @@ export default function TVShowsSection() {
     const releaseDate = upcoming.release_date?.slice(0, 4) || upcoming.first_air_date?.slice(0, 4);
 
     return (
-      <Link to={`tv-shows/${upcoming.id}`} key={upcoming.id} id={upcoming.id} className="linkEl">
+      <Link to={`tv/${upcoming.id}`} key={upcoming.id} id={upcoming.id} className="linkEl">
         <div className="card_element relative mx-auto h-[250px] w-full rounded-md bg-nav lg:h-[300px]">
           <img src={`https://image.tmdb.org/t/p/original/${upcoming.backdrop_path || upcoming.poster_path}`} alt={upcoming.title} className="h-full w-full rounded-lg" />
           <div className="overlay absolute left-0 top-0 h-full w-full bg-[rgba(0,0,0,0.4)]"></div>
@@ -144,7 +144,7 @@ export default function TVShowsSection() {
     const releaseDate = topRated.release_date?.slice(0, 4) || topRated.first_air_date?.slice(0, 4);
 
     return (
-      <Link to={`tv-shows/${topRated.id}`} key={topRated.id} id={topRated.id} className="linkEl">
+      <Link to={`tv/${topRated.id}`} key={topRated.id} id={topRated.id} className="linkEl">
         <div className="card_element relative mx-auto h-[250px] w-full rounded-md bg-nav lg:h-[300px]">
           <img src={`https://image.tmdb.org/t/p/original/${topRated.backdrop_path || topRated.poster_path}`} alt={topRated.title} className="h-full w-full rounded-lg" />
           <div className="overlay absolute left-0 top-0 h-full w-full bg-[rgba(0,0,0,0.4)]"></div>

@@ -198,3 +198,8 @@ a.active svg.icon-nav {
 .starNotActive {
   color: #171e31;
 }
+
+.genreMovie {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}

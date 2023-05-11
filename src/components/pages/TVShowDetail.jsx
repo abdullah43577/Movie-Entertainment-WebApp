@@ -5,8 +5,7 @@ import Loader from '../helper/Loader';
 import Rating from '../helper/Rating';
 
 export default function TVShowDetail() {
-  const { id } = useParams();
-
+  const { id, tvId } = useParams();
   const [tvShowDetail, setTVShowDetail] = useState([]);
   const [movieCredits, setMovieCredits] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -20,7 +19,7 @@ export default function TVShowDetail() {
       try {
         setIsLoading(true);
 
-        const res = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${API_KEY}&language=en-US`);
+        const res = await fetch(`https://api.themoviedb.org/3/tv/${tvId || id}?api_key=${API_KEY}&language=en-US`);
         const data = await res.json();
         setTVShowDetail(data);
         setVoteAvg(data.vote_average);
@@ -32,12 +31,12 @@ export default function TVShowDetail() {
     };
 
     renderMovie();
-  }, [id]);
+  }, [id, tvId]);
 
   useEffect(() => {
     const getCredits = async () => {
       try {
-        const res = await fetch(`https://api.themoviedb.org/3/tv/${id}/credits?api_key=${API_KEY}&language=en-US`);
+        const res = await fetch(`https://api.themoviedb.org/3/tv/${tvId || id}/credits?api_key=${API_KEY}&language=en-US`);
         const data = await res.json();
         setMovieCredits(data);
       } catch (err) {
@@ -46,7 +45,7 @@ export default function TVShowDetail() {
     };
 
     getCredits();
-  }, [id]);
+  }, [id, tvId]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);

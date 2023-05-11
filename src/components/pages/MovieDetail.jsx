@@ -5,7 +5,7 @@ import Loader from '../helper/Loader';
 import Rating from '../helper/Rating';
 
 export default function MovieDetail() {
-  const { id } = useParams();
+  const { id, movieId } = useParams();
   const [movieDetail, setMovieDetail] = useState([]);
   const [movieCredits, setMovieCredits] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -17,7 +17,7 @@ export default function MovieDetail() {
       try {
         setIsLoading(true);
 
-        const res = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&language=en-US`);
+        const res = await fetch(`https://api.themoviedb.org/3/movie/${movieId || id}?api_key=${API_KEY}&language=en-US`);
         const data = await res.json();
         setMovieDetail(data);
         setVoteAvg(data.vote_average);
@@ -29,12 +29,12 @@ export default function MovieDetail() {
     };
 
     renderMovie();
-  }, [id]);
+  }, [id, movieId]);
 
   useEffect(() => {
     const getCredits = async () => {
       try {
-        const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}&language=en-US`);
+        const res = await fetch(`https://api.themoviedb.org/3/movie/${movieId || id}/credits?api_key=${API_KEY}&language=en-US`);
         const data = await res.json();
         setMovieCredits(data);
       } catch (err) {
@@ -43,7 +43,7 @@ export default function MovieDetail() {
     };
 
     getCredits();
-  }, [id]);
+  }, [id, movieId]);
 
   const getHours = function (mins) {
     return `${Math.floor(mins / 60)} hrs`;
