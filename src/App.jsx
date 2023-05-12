@@ -1,22 +1,27 @@
-import { createBrowserRouter, Route, createRoutesFromElements, RouterProvider } from 'react-router-dom';
+import {
+  createBrowserRouter,
+  Route,
+  createRoutesFromElements,
+  RouterProvider,
+} from "react-router-dom";
 
 // components/pages
-import Home from './components/pages/Home';
-import NotFound from './components/pages/NotFound';
-import MoviesGenre from './components/pages/MoviesGenre';
-import TVGenre from './components/pages/TVGenre';
-import MovieDetail from './components/pages/MovieDetail';
-import TVShowDetail from './components/pages/TVShowDetail';
-import MovieGenreInfo from './components/pages/MovieGenreInfo';
-import TVGenreInfo from './components/pages/TVGenreInfo';
+import Home from "./components/pages/Home";
+import NotFound from "./components/pages/NotFound";
+import MoviesGenre from "./components/pages/MoviesGenre";
+import TVGenre from "./components/pages/TVGenre";
+import MovieDetail from "./components/pages/MovieDetail";
+import TVShowDetail from "./components/pages/TVShowDetail";
+import MovieGenreInfo from "./components/pages/MovieGenreInfo";
+import TVGenreInfo from "./components/pages/TVGenreInfo";
 
 // components/layouts/movies
-import RootLayout from './components/layouts/RootLayout';
-import TrendsLayout from './components/layouts/movies/TrendsLayout';
-import PopularLayout from './components/layouts/movies/PopularMoviesLayout';
-import NowPlayingMoviesLayout from './components/layouts/movies/NowPlayingMoviesLayout';
-import TopRatedMoviesLayout from './components/layouts/movies/TopRatedMoviesLayout';
-import UpcomingMoviesLayout from './components/layouts/movies/UpComingMoviesLayout';
+import RootLayout from "./components/layouts/RootLayout";
+import TrendsLayout from "./components/layouts/movies/TrendsLayout";
+import PopularLayout from "./components/layouts/movies/PopularMoviesLayout";
+import NowPlayingMoviesLayout from "./components/layouts/movies/NowPlayingMoviesLayout";
+import TopRatedMoviesLayout from "./components/layouts/movies/TopRatedMoviesLayout";
+import UpcomingMoviesLayout from "./components/layouts/movies/UpComingMoviesLayout";
 
 // components/layouts/TVshows
 
