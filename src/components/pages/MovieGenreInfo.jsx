@@ -3,20 +3,29 @@ import { API_KEY } from '../helper/API';
 import { useParams, Link } from 'react-router-dom';
 import movieClip from '../../icons folder/movieClip.svg';
 import Loader from '../helper/Loader';
+import Pagination from '../helper/Pagination';
 
 export default function MovieGenreInfo() {
   const { id } = useParams();
   const [movieGenreDetails, setMovieGenreDetails] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [itemsPerPage, setItemsPerpage] = useState(20);
+  const [totalPages, setTotalPages] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchMoviesByGenres = async () => {
       try {
         setIsLoading(true);
 
-        const res = await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${id}`);
+        const res = await fetch(
+          `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${currentPage}&with_watch_monetization_types=flatrate&with_genres=${id}`
+        );
         const data = await res.json();
         setMovieGenreDetails(data.results);
+        setTotalPages(data.total_pages);
+
+        console.log(data);
 
         setIsLoading(false);
       } catch (err) {
@@ -25,7 +34,7 @@ export default function MovieGenreInfo() {
     };
 
     fetchMoviesByGenres();
-  }, [id]);
+  }, [id, currentPage]);
 
   const selectedGenre = movieGenreDetails?.map((movie) => {
     const releaseDate = movie.release_date?.slice(0, 4) || movie.first_air_date?.slice(0, 4);
@@ -50,5 +59,16 @@ export default function MovieGenreInfo() {
     );
   });
 
-  return <div className="genreMovie gap-[1rem]">{isLoading ? <Loader isLoading={isLoading} /> : selectedGenre}</div>;
+  const handlePageClick = (selectedPage) => {
+    if (currentPage <= totalPages) {
+      setCurrentPage(selectedPage + 1);
+    }
+  };
+
+  return (
+    <>
+      <div className="genreMovie">{isLoading ? <Loader isLoading={isLoading} /> : selectedGenre}</div>
+      <Pagination itemsPerPage={itemsPerPage} totalPageNumber={totalPages} onPageChange={handlePageClick} currentPage={currentPage} />
+    </>
+  );
 }

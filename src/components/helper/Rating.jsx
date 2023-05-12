@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import React from 'react';
 
 export default function Rating({ voteAvg }) {
   const max_rating = 5;
@@ -23,5 +24,11 @@ export default function Rating({ voteAvg }) {
     setStars(updatedStars);
   }, [voteAvg]);
 
-  return <div className="stars flex items-center">{stars.map((star) => star)}</div>;
+  return (
+    <div className="stars flex items-center">
+      {stars.map((star, i) => (
+        <React.Fragment key={i}>{star}</React.Fragment>
+      ))}
+    </div>
+  );
 }

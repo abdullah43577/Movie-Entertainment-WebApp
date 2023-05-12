@@ -8,13 +8,18 @@ export default function TVGenreInfo() {
   const { id } = useParams();
   const [tvShowsGenreDetails, setTVShowsGenreDetails] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  // const [itemsPerPage, setItemsPerpage] = useState(20);
+  // const [totalPages, setTotalPages] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchMoviesByGenres = async () => {
       try {
         setIsLoading(true);
 
-        const res = await fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&with_genres=${id}`);
+        const res = await fetch(
+          `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${currentPage}&with_watch_monetization_types=flatrate&with_genres=${id}`
+        );
         const data = await res.json();
         setTVShowsGenreDetails(data.results);
 
@@ -50,5 +55,5 @@ export default function TVGenreInfo() {
     );
   });
 
-  return <div className="genreMovie gap-[1rem]">{isLoading ? <Loader isLoading={isLoading} /> : selectedGenre}</div>;
+  return <div className="genreMovie">{isLoading ? <Loader isLoading={isLoading} /> : selectedGenre}</div>;
 }
