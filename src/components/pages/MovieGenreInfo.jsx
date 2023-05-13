@@ -9,8 +9,8 @@ export default function MovieGenreInfo() {
   const { id } = useParams();
   const [movieGenreDetails, setMovieGenreDetails] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [totalPages, setTotalPages] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchMoviesByGenres = async () => {
@@ -22,9 +22,7 @@ export default function MovieGenreInfo() {
         );
         const data = await res.json();
         setMovieGenreDetails(data.results);
-        setTotalPages(data.total_pages);
-
-        console.log(data.total_pages);
+        setTotalPages(Math.min(data.total_pages, 500));
 
         setIsLoading(false);
       } catch (err) {
@@ -72,10 +70,9 @@ export default function MovieGenreInfo() {
   });
 
   const handlePageClick = (selectedPage) => {
-    if (currentPage > totalPages) return;
-    console.log(selectedPage);
-
-    setCurrentPage(selectedPage.selected + 1);
+    if (selectedPage.selected >= 0 && selectedPage.selected < totalPages) {
+      setCurrentPage(selectedPage.selected + 1);
+    }
   };
 
   return (

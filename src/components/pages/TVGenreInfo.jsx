@@ -3,14 +3,14 @@ import { API_KEY } from "../helper/API";
 import { useParams, Link } from "react-router-dom";
 import movieClip from "../../icons folder/movieClip.svg";
 import Loader from "../helper/Loader";
+import Pagination from "../helper/Pagination";
 
 export default function TVGenreInfo() {
   const { id } = useParams();
   const [tvShowsGenreDetails, setTVShowsGenreDetails] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  // const [itemsPerPage, setItemsPerpage] = useState(20);
-  // const [totalPages, setTotalPages] = useState();
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchMoviesByGenres = async () => {
@@ -22,6 +22,7 @@ export default function TVGenreInfo() {
         );
         const data = await res.json();
         setTVShowsGenreDetails(data.results);
+        setTotalPages(Math.min(data.total_pages, 500));
 
         setIsLoading(false);
       } catch (err) {
@@ -30,7 +31,7 @@ export default function TVGenreInfo() {
     };
 
     fetchMoviesByGenres();
-  }, [id]);
+  }, [id, currentPage]);
 
   const selectedGenre = tvShowsGenreDetails?.map((tv) => {
     const releaseDate =
@@ -68,9 +69,21 @@ export default function TVGenreInfo() {
     );
   });
 
+  const handlePageClick = (selectedPage) => {
+    if (selectedPage.selected >= 0 && selectedPage.selected < totalPages) {
+      setCurrentPage(selectedPage.selected + 1);
+    }
+  };
+
   return (
-    <div className="genreMovie">
-      {isLoading ? <Loader isLoading={isLoading} /> : selectedGenre}
-    </div>
+    <>
+      <div className="genreMovie">
+        {isLoading ? <Loader isLoading={isLoading} /> : selectedGenre}
+      </div>
+      <Pagination
+        handlePageClick={handlePageClick}
+        totalPageNumber={totalPages}
+      />
+    </>
   );
 }
