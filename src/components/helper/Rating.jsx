@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import React from 'react';
+import { useState, useEffect } from "react";
+import React from "react";
 
 export default function Rating({ voteAvg }) {
   const max_rating = 5;
@@ -12,13 +12,18 @@ export default function Rating({ voteAvg }) {
     const updatedStars = [];
 
     for (let i = 1; i <= max_rating; i++) {
-      const starClassName = i <= wholeNumberRating ? 'starActive' : 'starNotActive';
+      const starClassName =
+        i <= wholeNumberRating ? "starActive" : "starNotActive";
 
-      updatedStars.push(<i className={`fa-solid fa-star ${starClassName} fa-sm`}></i>);
+      updatedStars.push(
+        <i className={`fa-solid fa-star ${starClassName} fa-sm`}></i>
+      );
     }
 
     if (fractionalPart >= 5) {
-      updatedStars[wholeNumberRating] = <i className="fa-solid fa-star-half-stroke starActive fa-sm"></i>;
+      updatedStars[wholeNumberRating] = (
+        <i className="fa-solid fa-star-half-stroke starActive fa-sm"></i>
+      );
     }
 
     setStars(updatedStars);

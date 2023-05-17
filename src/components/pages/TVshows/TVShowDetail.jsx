@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { API_KEY } from "../helper/API";
-import Loader from "../helper/Loader";
-import Rating from "../helper/Rating";
+import { API_KEY } from "../../helper/API";
+import Loader from "../../helper/Loader";
+import Rating from "../../helper/Rating";
 
 export default function TVShowDetail() {
   const { id, tvId } = useParams();
@@ -48,7 +48,7 @@ export default function TVShowDetail() {
         const data = await res.json();
         setMovieCredits(data);
       } catch (err) {
-        console.error(err);
+        console.error(err.message);
       }
     };
 

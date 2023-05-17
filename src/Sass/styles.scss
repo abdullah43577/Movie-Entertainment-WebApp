@@ -220,27 +220,29 @@ a.active svg.icon-nav {
 
 .pagination {
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background: $nav;
-  padding: 5px 10px;
+  // padding: 5px 10px;
+  gap: 5px;
   border-radius: 8px;
   margin-block: 20px;
   max-width: 500px;
   margin-inline: auto;
 
-  .page-item {
-    // cursor: pointer;
-    padding: 4px 7px;
+  .page-item:not(.disabled) {
+    cursor: pointer;
+    padding: 8px 15px;
     border-radius: 3px;
 
     &:hover {
-      background: gray;
+      background: $iconNavLinks;
     }
   }
 
   .active {
-    background: $iconNavLinks;
+    background: $white;
   }
 
   .disabled {
@@ -253,4 +255,9 @@ a.active svg.icon-nav {
   .page-item {
     padding: 5px 10px;
   }
+}
+
+.link:hover .overlay {
+  height: 0 !important;
+  transition: height 1000ms ease;
 }

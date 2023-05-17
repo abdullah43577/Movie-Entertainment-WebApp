@@ -1,49 +1,48 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import movieClip from "../../icons folder/movieClip.svg";
-import { API_KEY } from "../helper/API";
-import TVShows from "./TVshows/TVShowsSection";
-import Loader from "../helper/Loader";
+import { API_KEY } from "../../helper/API";
+import Loader from "../../helper/Loader";
 
-export default function Home() {
-  const [movieTrends, setMovieTrends] = useState([]);
-  const [popularMovies, setPopularMovies] = useState([]);
-  const [nowPlaying, setNowPlaying] = useState([]);
-  const [upComing, setUpComing] = useState([]);
+export default function TVShowsSection() {
+  const [tvTrends, setTvTrends] = useState([]);
+  const [popularTVShows, setPopularTVShows] = useState([]);
+  const [airingToday, setAiringToday] = useState([]);
+  const [onAir, setOnAir] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchMovies() {
+    async function fetchTVShows() {
       try {
         setIsLoading(true);
 
         const trendRes = await fetch(
-          `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`
+          `https://api.themoviedb.org/3/trending/tv/week?api_key=${API_KEY}`
         );
         const data = await trendRes.json();
-        setMovieTrends(data.results);
+        setTvTrends(data.results);
 
         const popularRes = await fetch(
-          `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`
+          `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=1`
         );
         const data2 = await popularRes.json();
-        setPopularMovies(data2.results);
+        setPopularTVShows(data2.results);
 
-        const nowPlayingMoviesRes = await fetch(
-          `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`
+        const airingRes = await fetch(
+          `https://api.themoviedb.org/3/tv/airing_today?api_key=${API_KEY}&language=en-US&page=1`
         );
-        const data3 = await nowPlayingMoviesRes.json();
-        setNowPlaying(data3.results);
+        const data3 = await airingRes.json();
+        setAiringToday(data3.results);
 
-        const upComingRes = await fetch(
-          `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`
+        const onAirRes = await fetch(
+          `https://api.themoviedb.org/3/tv/on_the_air?api_key=${API_KEY}&language=en-US&page=1`
         );
-        const data4 = await upComingRes.json();
-        setUpComing(data4.results);
+        const data4 = await onAirRes.json();
+        setOnAir(data4.results);
 
         const topRatedRes = await fetch(
-          `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`
+          `https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&language=en-US&page=1`
         );
         const data5 = await topRatedRes.json();
         setTopRated(data5.results);
@@ -54,18 +53,18 @@ export default function Home() {
       }
     }
 
-    fetchMovies();
+    fetchTVShows();
   }, []);
 
-  const TrendingMoviesArr = movieTrends?.slice(0, 10).map((trend) => {
+  const trendingTVShows = tvTrends?.slice(0, 10).map((trend) => {
     const releaseDate =
       trend.release_date?.slice(0, 4) || trend.first_air_date?.slice(0, 4);
 
     return (
-      <Link to={`movies/${trend.id}`} key={trend.id} className="link">
+      <Link to={`tv/${trend.id}`} key={trend.id} className="link">
         <div className="card_element relative h-[250px] cursor-pointer overflow-hidden rounded-md bg-nav lg:h-[300px]">
           <img
-            src={`https://image.tmdb.org/t/p/w500/${
+            src={`https://image.tmdb.org/t/p/original/${
               trend.backdrop_path || trend.poster_path
             }`}
             alt={trend.title}
@@ -81,7 +80,7 @@ export default function Home() {
                   alt="movie clip element"
                   className="w-4 before:content-['.']"
                 />
-                <span>Movie</span>
+                <span>TV Series</span>
               </p>
             </div>
             <div className="title text-2xl font-medium lg:text-3xl">
@@ -94,12 +93,12 @@ export default function Home() {
   });
 
   // Popular Movies
-  const popularMoviesArr = popularMovies?.slice(0, 6).map((movie) => {
+  const popularTVShowsArr = popularTVShows?.slice(0, 6).map((movie) => {
     const releaseDate =
       movie.release_date?.slice(0, 4) || movie.first_air_date?.slice(0, 4);
 
     return (
-      <Link to={`movies/${movie.id}`} key={movie.id} className="linkEl link">
+      <Link to={`tv/${movie.id}`} key={movie.id} className="linkEl link">
         <div className="card_element relative mx-auto h-[250px] rounded-md bg-nav lg:h-[300px]">
           <img
             src={`https://image.tmdb.org/t/p/original/${
@@ -118,7 +117,7 @@ export default function Home() {
                   alt="movie clip element"
                   className="w-4 before:content-['.']"
                 />
-                <span>Movie</span>
+                <span>TV Series</span>
               </p>
             </div>
             <div className="title text-2xl font-medium">
@@ -130,17 +129,13 @@ export default function Home() {
     );
   });
 
-  // now playing
-  const nowPlayingMoviesArr = nowPlaying?.slice(0, 6).map((playing) => {
+  // airing today
+  const airingTodayRes = airingToday?.slice(0, 6).map((playing) => {
     const releaseDate =
       playing.release_date?.slice(0, 4) || playing.first_air_date?.slice(0, 4);
 
     return (
-      <Link
-        to={`movies/${playing.id}`}
-        key={playing.id}
-        className="linkEl link"
-      >
+      <Link to={`tv/${playing.id}`} key={playing.id} className="linkEl link">
         <div className="card_element relative mx-auto h-[250px] w-full rounded-md bg-nav lg:h-[300px]">
           <img
             src={`https://image.tmdb.org/t/p/original/${
@@ -159,7 +154,7 @@ export default function Home() {
                   alt="movie clip element"
                   className="w-4 before:content-['.']"
                 />
-                <span>Movie</span>
+                <span>TV Series</span>
               </p>
             </div>
             <div className="title text-2xl font-medium">
@@ -171,17 +166,13 @@ export default function Home() {
     );
   });
 
-  const upComingMoviesArr = upComing?.slice(0, 6).map((upcoming) => {
+  const onAirRes = onAir?.slice(0, 6).map((upcoming) => {
     const releaseDate =
       upcoming.release_date?.slice(0, 4) ||
       upcoming.first_air_date?.slice(0, 4);
 
     return (
-      <Link
-        to={`movies/${upcoming.id}`}
-        key={upcoming.id}
-        className="linkEl link"
-      >
+      <Link to={`tv/${upcoming.id}`} key={upcoming.id} className="linkEl link">
         <div className="card_element relative mx-auto h-[250px] w-full rounded-md bg-nav lg:h-[300px]">
           <img
             src={`https://image.tmdb.org/t/p/original/${
@@ -200,7 +191,7 @@ export default function Home() {
                   alt="movie clip element"
                   className="w-4 before:content-['.']"
                 />
-                <span>Movie</span>
+                <span>TV Series</span>
               </p>
             </div>
             <div className="title text-2xl font-medium">
@@ -212,17 +203,13 @@ export default function Home() {
     );
   });
 
-  const topRatedMoviesArr = topRated?.slice(0, 6).map((topRated) => {
+  const topRatedSeriesArr = topRated?.slice(0, 6).map((topRated) => {
     const releaseDate =
       topRated.release_date?.slice(0, 4) ||
       topRated.first_air_date?.slice(0, 4);
 
     return (
-      <Link
-        to={`movies/${topRated.id}`}
-        key={topRated.id}
-        className="linkEl link"
-      >
+      <Link to={`tv/${topRated.id}`} key={topRated.id} className="linkEl link">
         <div className="card_element relative mx-auto h-[250px] w-full rounded-md bg-nav lg:h-[300px]">
           <img
             src={`https://image.tmdb.org/t/p/original/${
@@ -241,7 +228,7 @@ export default function Home() {
                   alt="movie clip element"
                   className="w-4 before:content-['.']"
                 />
-                <span>Movie</span>
+                <span>TV Series</span>
               </p>
             </div>
             <div className="title text-2xl font-medium">
@@ -255,14 +242,14 @@ export default function Home() {
 
   return (
     <>
-      <div className="trends-hd flex items-center justify-between">
-        {/* Daily Movies */}
+      {/* Trending */}
+      <div className="trends-hd mt-32 flex items-center justify-between">
         <div className="trend-title flex items-center gap-3">
           <h2 className="text-2xl font-medium text-white lg:text-3xl">
             Trending
           </h2>
-          <div className="movieTxt-container rounded-lg border-2 border-white px-4 py-[2px] text-xs text-white lg:text-sm">
-            MOVIE
+          <div className="movieTxt-container rounded-lg bg-iconNavLink px-4 py-[2px] text-xs text-white lg:text-sm">
+            TV SHOW
           </div>
         </div>
         <Link
@@ -274,7 +261,7 @@ export default function Home() {
       </div>
 
       <div className="trending-movies-container my-8 overflow-x-scroll">
-        {isLoading ? <Loader isLoading={isLoading} /> : TrendingMoviesArr}
+        {isLoading ? <Loader isLoading={isLoading} /> : trendingTVShows}
       </div>
 
       {/* popular movies */}
@@ -283,8 +270,8 @@ export default function Home() {
           <h2 className="text-2xl font-medium text-white lg:text-3xl">
             Popular
           </h2>
-          <div className="movieTxt-container rounded-lg border-2 border-white px-4 py-[2px] text-xs text-white lg:text-sm">
-            MOVIE
+          <div className="movieTxt-container rounded-lg bg-iconNavLink px-4 py-[2px] text-xs text-white lg:text-sm">
+            TV SHOW
           </div>
         </div>
         <Link
@@ -294,18 +281,19 @@ export default function Home() {
           See more
         </Link>
       </div>
+
       <div className="movies-container my-8">
-        {isLoading ? <Loader isLoading={isLoading} /> : popularMoviesArr}
+        {isLoading ? <Loader isLoading={isLoading} /> : popularTVShowsArr}
       </div>
 
-      {/* Now Playing */}
+      {/* Airing today */}
       <div className="trends-hd mt-32 flex items-center justify-between">
         <div className="trend-title flex items-center gap-3">
           <h2 className="text-2xl font-medium text-white lg:text-3xl">
-            Now Playing
+            Airing Today
           </h2>
-          <div className="movieTxt-container rounded-lg border-2 border-white px-4 py-[2px] text-xs text-white lg:text-sm">
-            MOVIE
+          <div className="movieTxt-container rounded-lg bg-iconNavLink px-4 py-[2px] text-xs text-white lg:text-sm">
+            TV SHOW
           </div>
         </div>
         <Link
@@ -317,17 +305,17 @@ export default function Home() {
       </div>
 
       <div className="movies-container my-8">
-        {isLoading ? <Loader isLoading={isLoading} /> : nowPlayingMoviesArr}
+        {isLoading ? <Loader isLoading={isLoading} /> : airingTodayRes}
       </div>
 
-      {/* UpComing */}
+      {/* on Air */}
       <div className="trends-hd mt-32 flex items-center justify-between">
         <div className="trend-title flex items-center gap-3">
           <h2 className="text-2xl font-medium text-white lg:text-3xl">
-            Upcoming
+            On Air
           </h2>
-          <div className="movieTxt-container rounded-lg border-2 border-white px-4 py-[2px] text-xs text-white lg:text-sm">
-            MOVIE
+          <div className="movieTxt-container rounded-lg bg-iconNavLink px-4 py-[2px] text-xs text-white lg:text-sm">
+            TV SHOW
           </div>
         </div>
         <Link
@@ -339,7 +327,7 @@ export default function Home() {
       </div>
 
       <div className="movies-container my-8">
-        {isLoading ? <Loader isLoading={isLoading} /> : upComingMoviesArr}
+        {isLoading ? <Loader isLoading={isLoading} /> : onAirRes}
       </div>
 
       {/* Top rated */}
@@ -348,8 +336,8 @@ export default function Home() {
           <h2 className="text-2xl font-medium text-white lg:text-3xl">
             Top Rated
           </h2>
-          <div className="movieTxt-container rounded-lg border-2 border-white px-4 py-[2px] text-xs text-white lg:text-sm">
-            MOVIE
+          <div className="movieTxt-container rounded-lg bg-iconNavLink px-4 py-[2px] text-xs text-white lg:text-sm">
+            TV SHOW
           </div>
         </div>
         <Link
@@ -361,10 +349,8 @@ export default function Home() {
       </div>
 
       <div className="movies-container my-8">
-        {isLoading ? <Loader isLoading={isLoading} /> : topRatedMoviesArr}
+        {isLoading ? <Loader isLoading={isLoading} /> : topRatedSeriesArr}
       </div>
-
-      <TVShows />
     </>
   );
 }

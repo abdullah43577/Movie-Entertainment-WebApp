@@ -8,12 +8,12 @@ import {
 // components/pages
 import Home from "./components/pages/Home";
 import NotFound from "./components/pages/NotFound";
-import MoviesGenre from "./components/pages/MoviesGenre";
-import TVGenre from "./components/pages/TVGenre";
-import MovieDetail from "./components/pages/MovieDetail";
-import TVShowDetail from "./components/pages/TVShowDetail";
-import MovieGenreInfo from "./components/pages/MovieGenreInfo";
-import TVGenreInfo from "./components/pages/TVGenreInfo";
+import MoviesGenre from "./components/pages/movies/MoviesGenre";
+import TVGenre from "./components/pages/TVshows/TVGenre";
+import MovieDetail from "./components/pages/movies/MovieDetail";
+import TVShowDetail from "./components/pages/TVshows/TVShowDetail";
+import MovieGenreInfo from "./components/pages/movies/MovieGenreInfo";
+import TVGenreInfo from "./components/pages/TVshows/TVGenreInfo";
 
 // components/layouts/movies
 import RootLayout from "./components/layouts/RootLayout";
