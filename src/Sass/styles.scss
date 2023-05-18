@@ -129,6 +129,10 @@ a.active svg.icon-nav {
   }
 }
 
+.movies-container-trends > :last-child {
+  grid-column: 4 !important;
+}
+
 .card_element img {
   object-fit: cover;
 }
@@ -220,15 +224,13 @@ a.active svg.icon-nav {
 
 .pagination {
   display: flex;
-  // justify-content: space-between;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   background: $nav;
-  // padding: 5px 10px;
-  gap: 5px;
   border-radius: 8px;
   margin-block: 20px;
-  max-width: 500px;
+  width: 600px;
+  max-width: auto;
   margin-inline: auto;
 
   .page-item:not(.disabled) {
@@ -242,7 +244,7 @@ a.active svg.icon-nav {
   }
 
   .active {
-    background: $white;
+    background: $iconNavLinks;
   }
 
   .disabled {

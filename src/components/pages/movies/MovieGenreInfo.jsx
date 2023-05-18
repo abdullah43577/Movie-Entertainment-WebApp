@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { API_KEY } from "../../helper/API";
 import { useParams, Link } from "react-router-dom";
-import movieClip from "../../icons folder/movieClip.svg";
+import movieClip from "../../../icons folder/movieClip.svg";
 import Loader from "../../helper/Loader";
 import Pagination from "../../helper/Pagination";
 
@@ -83,12 +83,10 @@ export default function MovieGenreInfo() {
         {isLoading ? <Loader isLoading={isLoading} /> : selectedGenre}
       </div>
 
-      {!isLoading && (
-        <Pagination
-          handlePageClick={handlePageClick}
-          totalPageNumber={totalPages}
-        />
-      )}
+      <Pagination
+        handlePageClick={handlePageClick}
+        totalPageNumber={totalPages}
+      />
     </>
   );
 }

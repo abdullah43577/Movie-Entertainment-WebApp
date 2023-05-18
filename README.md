@@ -41,4 +41,4 @@ Immersing myself in the development process, I crafted a visually appealing and 
 
 ## What I learnt building this
 
-This is by far the most complex project I've ever built. This is an inpired project by one of frontendmentors project, but this is not the solution to the challenge at frontendmentors. I couldn't have imagined how i'm supposed to build this using just javascript. For the first time, i worked on a project i think couldn't have been built using javascript only!. There might have been a way using javascript as well, but none that I know of currently and i'm going to conduct my researh on this.
+This is by far the most complex project I've ever built. This is an inpired project by one of frontendmentors project, but this is not the solution to the challenge at frontendmentors. I couldn't have imagined how i'm supposed to build this using just javascript. For the first time, i worked on a project i think couldn't have been built using javascript only!. There might have been a way using javascript as well, but none that I know of currently and i'm going to conduct my research on this.

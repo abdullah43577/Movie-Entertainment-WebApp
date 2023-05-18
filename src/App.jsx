@@ -40,18 +40,21 @@ const router = createBrowserRouter(
         <Route path=":genre/:id/:movieId" element={<MovieDetail />} />
       </Route>
 
+      <Route path="movies/:name">
+        <Route path=":id" element={<MovieDetail />} />
+      </Route>
+
       <Route path="tv/genres">
         <Route index element={<TVGenre />} />
         <Route path=":genre/:id" element={<TVGenreInfo />} />
         <Route path=":genre/:id/:tvId" element={<TVShowDetail />} />
       </Route>
 
-      {/* <Route path="tv-shows/genres" element={<TVGenre />} /> */}
-
       {/* see more btns */}
       <Route path="movies/trends" element={<TrendsLayout />} />
       <Route path="movies/popular-movies" element={<PopularLayout />} />
       <Route path="movies/now-playing" element={<NowPlayingMoviesLayout />} />
+
       <Route path="movies/upcoming-movies" element={<UpcomingMoviesLayout />} />
       <Route path="movies/toprated-movies" element={<TopRatedMoviesLayout />} />
 
