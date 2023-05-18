@@ -101,14 +101,14 @@ export default function RootLayout() {
         </section>
 
         {/* footer */}
-        <section className="footer ml:32 mx-auto mt-8 flex w-full flex-col items-center justify-center gap-4 lg:flex-row">
-          <p className="text-xl font-bold">Powered by</p>
+        <section className="footer ml:32 mx-auto mt-16 flex w-full flex-col items-center justify-center gap-4">
+          <p className="text-base font-bold text-gray-500">Powered by</p>
           <img
             src={isSmallScreen ? iconTMDBMobile : iconTMDBDesktop}
             alt={isSmallScreen ? "icon tmdb mobile" : "icon tmdb desktop"}
             className="w-[50px] sm:w-[100px] md:w-[150px] lg:w-[200px]"
           />
-          <p className="text-xl font-bold">
+          <p className="text-base font-bold text-gray-500">
             Copyright &copy; {year} All rights reserved
           </p>
         </section>

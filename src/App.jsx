@@ -44,6 +44,10 @@ const router = createBrowserRouter(
         <Route path=":id" element={<MovieDetail />} />
       </Route>
 
+      <Route path="tv/:name">
+        <Route path=":id" element={<TVShowDetail />} />
+      </Route>
+
       <Route path="tv/genres">
         <Route index element={<TVGenre />} />
         <Route path=":genre/:id" element={<TVGenreInfo />} />
