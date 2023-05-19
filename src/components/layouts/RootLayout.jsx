@@ -35,10 +35,6 @@ export default function RootLayout() {
     );
 
     setSearchResult(filter);
-    console.log("data", data);
-    console.log("filter", filter);
-
-    // setInputValue("");
 
     navigate("search", {
       state: { inputValue, searchResult: filter },

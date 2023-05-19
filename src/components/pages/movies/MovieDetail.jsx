@@ -74,7 +74,7 @@ export default function MovieDetail() {
   return (
     <div className="detail item-start flex max-w-[90%] flex-col justify-center gap-[3rem] lg:flex-row">
       <div
-        className={`img h-[400px] w-full items-center justify-center rounded-lg bg-btns lg:h-[700px] lg:w-[500px] ${
+        className={`img h-[400px] w-full items-center justify-center rounded-lg bg-transparent lg:h-[700px] lg:w-[500px] lg:bg-btns ${
           imageLoading ? "flex" : ""
         }`}
       >
@@ -84,7 +84,7 @@ export default function MovieDetail() {
             movieDetail.poster_path || movieDetail.backdrop_path
           }`}
           alt={movieDetail.title}
-          className={`mx-auto h-full w-full rounded-lg object-cover ${
+          className={`mx-auto h-full w-full rounded-lg object-contain lg:object-cover ${
             imageLoading ? "hidden" : "block"
           }`}
           onLoad={handleImageLoad}
