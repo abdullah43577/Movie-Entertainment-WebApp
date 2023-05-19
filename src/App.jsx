@@ -30,11 +30,15 @@ import AiringToday from "./components/layouts/TVshows/AiringToday";
 import OnAir from "./components/layouts/TVshows/OnAir";
 import TopRatedShows from "./components/layouts/TVshows/TopRatedShows";
 
+// search result
+import SearchResults from "./components/layouts/SearchResults";
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<RootLayout />}>
       {/* homepage navigation links */}
       <Route index element={<Home />} />
+      <Route path="search" element={<SearchResults />} />
 
       <Route path="movies/:id" element={<MovieDetail />} />
       <Route path="tv/:id" element={<TVShowDetail />} />
@@ -43,6 +47,11 @@ const router = createBrowserRouter(
         <Route index element={<MoviesGenre />} />
         <Route path=":genre/:id" element={<MovieGenreInfo />} />
         <Route path=":genre/:id/:movieId" element={<MovieDetail />} />
+      </Route>
+
+      <Route path="search">
+        <Route path="movie/:id" element={<MovieDetail />} />
+        <Route path="tv/:id" element={<TVShowDetail />} />
       </Route>
 
       <Route path="movies/:name">

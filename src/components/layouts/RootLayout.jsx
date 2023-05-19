@@ -1,27 +1,48 @@
 import { useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { useNavigate, NavLink, Outlet } from "react-router-dom";
 import imageLogo from "../../icons folder/logo.svg";
 import avatar from "../../icons folder/image-avatar.png";
 import searchIcon from "../../icons folder/searchIcon.svg";
 import iconTMDBDesktop from "../../icons folder/icon-tmdb-long.svg";
 import iconTMDBMobile from "../../icons folder/icon-tmdb-short.svg";
 import { useMediaQuery } from "@react-hook/media-query";
+import { API_KEY } from "../helper/API";
 
 export default function RootLayout() {
-  const handleSubmit = function (e) {
-    e.preventDefault();
-  };
-
   const [inputValue, setInputValue] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+  const navigate = useNavigate();
 
   const handleInput = function (e) {
     const { value } = e.target;
     setInputValue(value);
   };
 
-  const handleFormSubmission = function () {
+  const handleSubmit = async function (e) {
+    e.preventDefault();
+
     if (!inputValue) return;
-    setInputValue("");
+
+    const res = await fetch(
+      `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${inputValue}`
+    );
+    const data = await res.json();
+
+    const filter = data.results.filter(
+      (data) =>
+        data.media_type.toLowerCase() === "movie" ||
+        data.media_type.toLowerCase() === "tv"
+    );
+
+    setSearchResult(filter);
+    console.log("data", data);
+    console.log("filter", filter);
+
+    // setInputValue("");
+
+    navigate("search", {
+      state: { inputValue, searchResult: filter },
+    });
   };
 
   const isSmallScreen = useMediaQuery("(max-width:480px)");
@@ -89,15 +110,12 @@ export default function RootLayout() {
               value={inputValue}
               onChange={handleInput}
             />
-            <button
-              className="ml-4 rounded-md bg-btns px-3 py-4 text-sm text-white hover:bg-white hover:text-btns xl:text-base"
-              onClick={handleFormSubmission}
-            >
+            <button className="ml-4 rounded-md bg-btns px-3 py-4 text-sm text-white hover:bg-white hover:text-btns xl:text-base">
               Search
             </button>
           </form>
 
-          <Outlet />
+          <Outlet inputValue={inputValue} searchResult={searchResult} />
         </section>
 
         {/* footer */}
