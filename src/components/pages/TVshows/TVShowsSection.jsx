@@ -253,7 +253,7 @@ export default function TVShowsSection() {
           </div>
         </div>
         <Link
-          to="movies/trends"
+          to="tv/trends"
           className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm"
         >
           See more
@@ -275,7 +275,7 @@ export default function TVShowsSection() {
           </div>
         </div>
         <Link
-          to="movies/popular-movies"
+          to="tv/popular-movies"
           className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm"
         >
           See more
@@ -297,7 +297,7 @@ export default function TVShowsSection() {
           </div>
         </div>
         <Link
-          to="movies/now-playing"
+          to="tv/airing"
           className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm"
         >
           See more
@@ -319,7 +319,7 @@ export default function TVShowsSection() {
           </div>
         </div>
         <Link
-          to="movies/upcoming-movies"
+          to="tv/on-air"
           className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm"
         >
           See more
@@ -341,7 +341,7 @@ export default function TVShowsSection() {
           </div>
         </div>
         <Link
-          to="movies/toprated-movies"
+          to="tv/toprated"
           className="text-xs uppercase text-btns hover:text-white hover:underline lg:text-sm"
         >
           See more

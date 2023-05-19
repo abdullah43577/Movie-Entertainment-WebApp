@@ -24,6 +24,11 @@ import TopRatedMoviesLayout from "./components/layouts/movies/TopRatedMoviesLayo
 import UpcomingMoviesLayout from "./components/layouts/movies/UpComingMoviesLayout";
 
 // components/layouts/TVshows
+import TrendingShows from "./components/layouts/TVshows/TrendingShows";
+import PopularShows from "./components/layouts/TVshows/PopularShows";
+import AiringToday from "./components/layouts/TVshows/AiringToday";
+import OnAir from "./components/layouts/TVshows/OnAir";
+import TopRatedShows from "./components/layouts/TVshows/TopRatedShows";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -54,13 +59,20 @@ const router = createBrowserRouter(
         <Route path=":genre/:id/:tvId" element={<TVShowDetail />} />
       </Route>
 
-      {/* see more btns */}
+      {/* see more btns movies*/}
       <Route path="movies/trends" element={<TrendsLayout />} />
       <Route path="movies/popular-movies" element={<PopularLayout />} />
       <Route path="movies/now-playing" element={<NowPlayingMoviesLayout />} />
 
       <Route path="movies/upcoming-movies" element={<UpcomingMoviesLayout />} />
       <Route path="movies/toprated-movies" element={<TopRatedMoviesLayout />} />
+
+      {/* see more btns tvshows */}
+      <Route path="tv/trends" element={<TrendingShows />} />
+      <Route path="tv/popular-movies" element={<PopularShows />} />
+      <Route path="tv/airing" element={<AiringToday />} />
+      <Route path="tv/on-air" element={<OnAir />} />
+      <Route path="tv/toprated" element={<TopRatedShows />} />
 
       {/* Custom 404 Page */}
       <Route path="*" element={<NotFound />} />

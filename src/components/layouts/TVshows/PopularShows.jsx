@@ -55,7 +55,7 @@ export default function PopularShows() {
                   alt="movie clip element"
                   className="w-4 before:content-['.']"
                 />
-                <span>Movie</span>
+                <span>TV Series</span>
               </p>
             </div>
             <div className="title text-2xl font-medium">
