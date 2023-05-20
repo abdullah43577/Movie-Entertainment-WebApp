@@ -11,6 +11,7 @@ import { API_KEY } from "../helper/API";
 export default function RootLayout() {
   const [inputValue, setInputValue] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  // const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
   const handleInput = function (e) {
@@ -24,9 +25,10 @@ export default function RootLayout() {
     if (!inputValue) return;
 
     const res = await fetch(
-      `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${inputValue}`
+      `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${inputValue}&page=1`
     );
     const data = await res.json();
+    console.log(data);
 
     const filter = data.results.filter(
       (data) =>
@@ -35,6 +37,7 @@ export default function RootLayout() {
     );
 
     setSearchResult(filter);
+    // setTotalPages(Math.min(data.total_pages, 500));
 
     navigate("search", {
       state: { inputValue, searchResult: filter },
