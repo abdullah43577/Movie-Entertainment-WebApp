@@ -1,11 +1,10 @@
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import movieClip from "../../icons folder/movieClip.svg";
-// import Pagination from "../helper/Pagination";
 
 export default function SearchResult() {
   const location = useLocation();
-  const { inputValue, searchResult } = location.state;
+  const { inputValue, searchResult, totalResult } = location.state;
 
   const search = searchResult?.map((search) => {
     const releaseDate =
@@ -54,10 +53,7 @@ export default function SearchResult() {
   return (
     <>
       <h2 className="text-2xl">
-        Found{" "}
-        <span className="font-bold text-iconNavLink">
-          {searchResult.length}
-        </span>{" "}
+        Found <span className="font-bold text-iconNavLink">{totalResult}</span>{" "}
         results for{" "}
         <span className="font-bold capitalize text-iconNavLink">
           {inputValue}

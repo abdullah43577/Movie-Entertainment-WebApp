@@ -10,7 +10,6 @@ import { API_KEY } from "../helper/API";
 
 export default function RootLayout() {
   const [inputValue, setInputValue] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
   // const [totalPages, setTotalPages] = useState(1);
   const navigate = useNavigate();
 
@@ -36,11 +35,17 @@ export default function RootLayout() {
         data.media_type.toLowerCase() === "tv"
     );
 
-    setSearchResult(filter);
+    const searchResult = filter;
+    const totalResult = data.total_results;
+
     // setTotalPages(Math.min(data.total_pages, 500));
 
     navigate("search", {
-      state: { inputValue, searchResult: filter },
+      state: {
+        inputValue,
+        searchResult: filter,
+        totalResult: data.total_results,
+      },
     });
   };
 
@@ -114,7 +119,7 @@ export default function RootLayout() {
             </button>
           </form>
 
-          <Outlet inputValue={inputValue} searchResult={searchResult} />
+          <Outlet />
         </section>
 
         {/* footer */}
