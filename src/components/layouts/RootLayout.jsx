@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, NavLink, Outlet } from "react-router-dom";
 import imageLogo from "../../icons folder/logo.svg";
 import avatar from "../../icons folder/image-avatar.png";
@@ -10,13 +10,18 @@ import { API_KEY } from "../helper/API";
 
 export default function RootLayout() {
   const [inputValue, setInputValue] = useState("");
-  // const [totalPages, setTotalPages] = useState(1);
-  const navigate = useNavigate();
 
   const handleInput = function (e) {
     const { value } = e.target;
     setInputValue(value);
   };
+
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const navigate = useNavigate();
+  const [searchResult, setSearchResult] = useState(null);
+  const [totalResult, setTotalResult] = useState(null);
+  const [totalPages, setTotalPages] = useState(null);
 
   const handleSubmit = async function (e) {
     e.preventDefault();
@@ -24,7 +29,7 @@ export default function RootLayout() {
     if (!inputValue) return;
 
     const res = await fetch(
-      `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${inputValue}&page=1`
+      `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${inputValue}&page=${currentPage}`
     );
     const data = await res.json();
     console.log(data);
@@ -35,18 +40,28 @@ export default function RootLayout() {
         data.media_type.toLowerCase() === "tv"
     );
 
-    const searchResult = filter;
-    const totalResult = data.total_results;
+    setSearchResult(filter);
+    setTotalResult(data.total_results);
+    setTotalPages(Math.min(data.total_pages, 500));
 
-    // setTotalPages(Math.min(data.total_pages, 500));
+    // console.log("searchResult", searchResult);
+    // console.log("totalResult", totalResult);
+    // console.log("inputValue", inputValue);
 
     navigate("search", {
       state: {
         inputValue,
         searchResult: filter,
         totalResult: data.total_results,
+        totalPages: Math.min(data.total_pages, 500),
       },
     });
+  };
+
+  const handlePageClick = function (selectedPage) {
+    const selected = selectedPage.selected;
+    console.log(selected);
+    setCurrentPage(selected + 1);
   };
 
   const isSmallScreen = useMediaQuery("(max-width:480px)");
@@ -119,7 +134,7 @@ export default function RootLayout() {
             </button>
           </form>
 
-          <Outlet />
+          <Outlet handlePageClick={handlePageClick} />
         </section>
 
         {/* footer */}

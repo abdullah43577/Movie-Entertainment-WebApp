@@ -224,18 +224,21 @@ a.active svg.icon-nav {
 
 .pagination {
   display: flex;
-  justify-content: space-around;
+  gap: 6px;
   align-items: center;
   background: $nav;
   border-radius: 8px;
   margin-block: 20px;
-  width: 600px;
-  max-width: auto;
+  max-width: 600px;
   margin-inline: auto;
+
+  > * {
+    margin-inline: auto;
+    padding: 10px 12px;
+  }
 
   .page-item:not(.disabled) {
     cursor: pointer;
-    padding: 8px 15px;
     border-radius: 3px;
 
     &:hover {
@@ -255,7 +258,7 @@ a.active svg.icon-nav {
 
 @media (min-width: 768px) {
   .page-item {
-    padding: 5px 10px;
+    padding: 8px 15px;
   }
 }
 

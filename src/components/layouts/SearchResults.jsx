@@ -1,10 +1,14 @@
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import movieClip from "../../icons folder/movieClip.svg";
+import Pagination from "../helper/Pagination";
 
-export default function SearchResult() {
+export default function SearchResult({ handlePageClick }) {
   const location = useLocation();
-  const { inputValue, searchResult, totalResult } = location.state;
+  console.log("location", location);
+  const { inputValue, searchResult, totalResult, totalPages } = location.state;
+
+  console.log("handlepageclick", handlePageClick);
 
   const search = searchResult?.map((search) => {
     const releaseDate =
@@ -62,10 +66,10 @@ export default function SearchResult() {
 
       <div className="genreMovie mt-8">{search}</div>
 
-      {/* <Pagination
+      <Pagination
         handlePageClick={handlePageClick}
         totalPageNumber={totalPages}
-      /> */}
+      />
     </>
   );
 }
