@@ -134,7 +134,7 @@ export default function RootLayout() {
             </button>
           </form>
 
-          <Outlet handlePageClick={handlePageClick} />
+          <Outlet context={{handlePageClick}} />
         </section>
 
         {/* footer */}

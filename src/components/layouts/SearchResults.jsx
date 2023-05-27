@@ -1,14 +1,14 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useOutletContext } from "react-router-dom";
 import { Link } from "react-router-dom";
 import movieClip from "../../icons folder/movieClip.svg";
 import Pagination from "../helper/Pagination";
 
-export default function SearchResult({ handlePageClick }) {
+export default function SearchResult() {
   const location = useLocation();
-  console.log("location", location);
-  const { inputValue, searchResult, totalResult, totalPages } = location.state;
+  const { handlePageClick } = useOutletContext();
 
-  console.log("handlepageclick", handlePageClick);
+
+  const { inputValue, searchResult, totalResult, totalPages } = location.state;
 
   const search = searchResult?.map((search) => {
     const releaseDate =
@@ -67,7 +67,7 @@ export default function SearchResult({ handlePageClick }) {
       <div className="genreMovie mt-8">{search}</div>
 
       <Pagination
-        handlePageClick={handlePageClick}
+        // handlePageClick={handlePageClick}
         totalPageNumber={totalPages}
       />
     </>
