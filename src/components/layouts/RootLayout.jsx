@@ -24,11 +24,12 @@ export default function RootLayout() {
   const [totalPages, setTotalPages] = useState(null);
 
   const fetchData = async () => {
+    if (!inputValue) return;
+
     const res = await fetch(
       `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${inputValue}&page=${currentPage}`
     );
     const data = await res.json();
-    console.log(data);
 
     const filter = data.results.filter(
       (data) =>
@@ -52,8 +53,6 @@ export default function RootLayout() {
 
   const handleSubmit = function (e) {
     e.preventDefault();
-
-    if (!inputValue) return;
 
     fetchData();
   };
