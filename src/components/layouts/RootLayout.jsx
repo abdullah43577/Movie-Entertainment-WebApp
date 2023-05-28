@@ -23,11 +23,7 @@ export default function RootLayout() {
   const [totalResult, setTotalResult] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
 
-  const handleSubmit = async function (e) {
-    e.preventDefault();
-
-    if (!inputValue) return;
-
+  const fetchData = async () => {
     const res = await fetch(
       `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${inputValue}&page=${currentPage}`
     );
@@ -44,10 +40,6 @@ export default function RootLayout() {
     setTotalResult(data.total_results);
     setTotalPages(Math.min(data.total_pages, 500));
 
-    // console.log("searchResult", searchResult);
-    // console.log("totalResult", totalResult);
-    // console.log("inputValue", inputValue);
-
     navigate("search", {
       state: {
         inputValue,
@@ -58,11 +50,27 @@ export default function RootLayout() {
     });
   };
 
-  const handlePageClick = function (selectedPage) {
-    const selected = selectedPage.selected;
-    console.log(selected);
-    setCurrentPage(selected + 1);
+  const handleSubmit = function (e) {
+    e.preventDefault();
+
+    if (!inputValue) return;
+
+    fetchData();
   };
+
+  const handlePageClick = function (selectedPage) {
+    const currentPage = selectedPage.selected;
+    console.log(currentPage);
+    // if currentPage >= 0, means if the selected page in the pagination is >= 1
+    if (currentPage >= 0 && currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+      console.log("currentPage", currentPage);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [currentPage]);
 
   const isSmallScreen = useMediaQuery("(max-width:480px)");
   const year = new Date().getFullYear();
@@ -134,7 +142,7 @@ export default function RootLayout() {
             </button>
           </form>
 
-          <Outlet handlePageClick={handlePageClick} />
+          <Outlet context={{ handlePageClick }} />
         </section>
 
         {/* footer */}

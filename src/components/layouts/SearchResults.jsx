@@ -1,14 +1,12 @@
-import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useLocation, useOutletContext, Link } from "react-router-dom";
 import movieClip from "../../icons folder/movieClip.svg";
 import Pagination from "../helper/Pagination";
 
-export default function SearchResult({ handlePageClick }) {
+export default function SearchResult() {
   const location = useLocation();
-  console.log("location", location);
   const { inputValue, searchResult, totalResult, totalPages } = location.state;
 
-  console.log("handlepageclick", handlePageClick);
+  const { handlePageClick } = useOutletContext();
 
   const search = searchResult?.map((search) => {
     const releaseDate =
