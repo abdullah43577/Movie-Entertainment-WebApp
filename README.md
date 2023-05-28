@@ -1,7 +1,6 @@
 # Table Of Contents
 
 - [Getting Started](#getting-started)
-- [Features](#features-of-the-project)
 - [Screenshots](#screenshots)
 - [Tools](#tools)
 - [Contributing](#contributing)
@@ -37,13 +36,6 @@ This web application serves as a haven for movie enthusiasts, allowing them to d
 
 Immersing myself in the development process, I crafted a visually appealing and user-friendly interface using CSS styling techniques. Each movie and TV show is presented with captivating details such as descriptions, cast information, release dates, and ratings. By providing users with comprehensive insights, I aimed to empower them to make informed choices and discover new favorites.
 
-# Features of the Project
-
-1. users can view the latest movies and latest tvshows/series on the homepage
-2. users can filter through genre and view the movies or tvshows/series of their choosing.
-3. users can bookmark any movie of their choosing and can easily access their bookmarked movie in the bookmarks tab
-4. users can view similar or related movies based on a selected movie
-
 ## Screenshots
 
 ![](./Screenshots/Screenshot_29.png)
@@ -71,6 +63,7 @@ Immersing myself in the development process, I crafted a visually appealing and 
 - useEffect
 - useMediaQuery
 - useParams
+- useNavigate
 - React Router Dom
 - React Spinners `BeatLoader` precisely
 
