@@ -1,4 +1,33 @@
-### Still In The Production Phase
+# Table Of Contents
+
+- [Getting Started](#getting-started)
+- [Features](#features-of-the-project)
+- [Screenshots](#screenshots)
+- [Tools](#tools)
+- [Contributing](#contributing)
+- [Acknowledgement](#acknowledgements)
+- [Contact](#contact)
+
+## Getting Started
+
+1. Clone this repository to your local machine using the following command:
+   `git clone <repository-url>`
+
+2. Navigate to the project's directory
+   `cd movie-entertainment-web-app`
+
+3. Install the dependencies using your preferred package manager
+   `npm install`
+
+4. Obtain an API key from [The Movie Database (TMDb)](themoviedb.org) by creating an account and generating an API key.
+
+5. Create a .env file in the root directory of the project and add the following line, replacing <your-api-key> with your actual TMDb API key:
+   `REACT_APP_TMDB_API_KEY=<your-api-key>`
+
+6. Start development server
+   `npm start`
+
+This will run the application in development mode. Open http://localhost:3000 in your browser to view it.
 
 # Movie Entertainment Web Application
 
@@ -48,3 +77,33 @@ Immersing myself in the development process, I crafted a visually appealing and 
 ## What I learnt building this
 
 This is by far the most complex project I've ever built. This is an inpired project by one of frontendmentors project, but this is not the solution to the challenge at frontendmentors. I couldn't have imagined how i'm supposed to build this using just javascript. For the first time, i worked on a project i think couldn't have been built using javascript only!. There might have been a way using javascript as well, but none that I know of currently and i'm going to conduct my research on this.
+
+## Contributing
+
+Contributions are welcome! If you'd like to contribute to this movie entertainment web application, please follow these steps:
+
+1. Fork the repository and create your branch
+   `git checkout -b my-branch`
+
+2. Make your changes and commit them
+   `git commit -m "My changes"`
+
+3. Push to your branch
+   `git push origin my-branch`
+
+4. Open a pull request in this repository, and provide a detailed description of your changes and improvements.
+
+## Acknowledgements
+
+I would like to express my gratitude to the following resources that helped me throughout the development of this project:
+
+1. [React Documentation](https://react.dev/)
+2. [TailwindCSS documentation](https://tailwindcss.com/docs/installation)
+3. [The Movie Database (TMDb) API documentation](ttps://developers.themoviedb.org/3/getting-started/introduction)
+
+## Contact
+
+If you have any questions or feedback, feel free to reach out to me:
+
+- Email: officialayo540@gmail.com
+- Twitter: https://twitter.com/officialayo540
