@@ -6,7 +6,7 @@ import searchIcon from "../../icons folder/searchIcon.svg";
 import iconTMDBDesktop from "../../icons folder/icon-tmdb-long.svg";
 import iconTMDBMobile from "../../icons folder/icon-tmdb-short.svg";
 import { useMediaQuery } from "@react-hook/media-query";
-import { API_KEY } from "../helper/API";
+import { API_KEY } from "../helper/helperModules";
 
 export default function RootLayout() {
   const [inputValue, setInputValue] = useState("");

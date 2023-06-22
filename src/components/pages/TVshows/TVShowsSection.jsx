@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import movieClip from "../../../icons folder/movieClip.svg";
-import { API_KEY } from "../../helper/API";
+import { API_KEY } from "../../helper/helperModules";
 import Loader from "../../helper/Loader";
 
 export default function TVShowsSection() {

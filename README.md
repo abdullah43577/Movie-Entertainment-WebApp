@@ -49,7 +49,7 @@ Immersing myself in the development process, I crafted a visually appealing and 
 ## Tools
 
 - HTML5
-- SASS
+- SCSS
 - GRID
 - Mobile-first workflow
 - [React](https://reactjs.org/) - JS library

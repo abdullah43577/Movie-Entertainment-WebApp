@@ -1,8 +1,23 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { API_KEY } from "../../helper/API";
+import {
+  API_KEY,
+  formatDate,
+  getHours,
+  getMinutes,
+} from "../../helper/helperModules";
 import Loader from "../../helper/Loader";
 import Rating from "../../helper/Rating";
+
+// todo 1: implement similar movie based on the movie rendered here
+
+// todo 2: truncate the returned results to 3 on mobile and 5 on desktop
+
+// todo 3: when a user clicks on the similar movie rendered, it takes them to the details page of that particular movie selected.
+
+// todo 4: implement a bookmark icon amongst the nav icons on the page, onClick navigates the user to "/bookmarks", but first check to see if there's an option of implementing a bookmark functionality from the API docs
+
+// todo 5: implement a bookmark btn on the details page, (useful for when a user wants to keep track of when a movie is released)
 
 export default function MovieDetail() {
   const { id, movieId } = useParams();
@@ -52,22 +67,6 @@ export default function MovieDetail() {
 
     getCredits();
   }, [id, movieId]);
-
-  const getHours = function (mins) {
-    return `${Math.floor(mins / 60)} hrs`;
-  };
-
-  const getMinutes = function (mins) {
-    return `${mins % 60} mins`;
-  };
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const options = { day: "numeric", month: "long", year: "numeric" };
-
-    const formattedDate = date.toLocaleDateString("en-US", options);
-    return formattedDate;
-  };
 
   const handleImageLoad = () => setImageLoading(false);
 
