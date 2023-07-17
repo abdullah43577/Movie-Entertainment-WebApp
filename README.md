@@ -1,16 +1,21 @@
 # Table Of Contents
 
-- [Getting Started](#getting-started)
-- [Screenshots](#screenshots)
-- [Tools](#tools)
-- [Contributing](#contributing)
-- [Acknowledgement](#acknowledgements)
-- [Contact](#contact)
+- [Table Of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+- [Movie Entertainment Web Application](#movie-entertainment-web-application)
+  - [Screenshots](#screenshots)
+  - [Tools](#tools)
+    - [React libraries/hooks/frameworks used](#react-librarieshooksframeworks-used)
+  - [What I learnt building this](#what-i-learnt-building-this)
+  - [Contributing](#contributing)
+  - [Acknowledgements](#acknowledgements)
+  - [Contact](#contact)
 
 ## Getting Started
 
 1. Clone this repository to your local machine using the following command:
    `git clone <repository-url>`
+   "working"
 
 2. Navigate to the project's directory
    `cd movie-entertainment-web-app`
