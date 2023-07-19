@@ -1,9 +1,4 @@
-import {
-  createBrowserRouter,
-  Route,
-  createRoutesFromElements,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // components/pages
 import Home from "./components/pages/Home";
@@ -33,65 +28,194 @@ import TopRatedShows from "./components/layouts/TVshows/TopRatedShows";
 // search result
 import SearchResults from "./components/layouts/SearchResults";
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path="/" element={<RootLayout />}>
-      {/* homepage navigation links */}
-      <Route index element={<Home />} />
-      <Route path="search" element={<SearchResults />} />
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <RootLayout />,
 
-      <Route path="movies/:id" element={<MovieDetail />} />
-      <Route path="movies/similar-movie/:id" element={<MovieDetail />} />
-      <Route path="movies/trends/movies/:id" element={<MovieDetail />} />
-      <Route path="tv/trends/movies/:id" element={<TVShowDetail />} />
-      <Route path="tv/:id" element={<TVShowDetail />} />
-      <Route path="tv/similar-series/:id" element={<TVShowDetail />} />
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
 
-      <Route path="movies/genres">
-        <Route index element={<MoviesGenre />} />
-        <Route path=":genre/:id" element={<MovieGenreInfo />} />
-        <Route path=":genre/:id/:movieId" element={<MovieDetail />} />
-      </Route>
+      {
+        path: "search",
+        element: <SearchResults />,
+      },
 
-      <Route path="search">
-        <Route path="movie/:id" element={<MovieDetail />} />
-        <Route path="tv/:id" element={<TVShowDetail />} />
-      </Route>
+      {
+        path: "movies/:id",
+        element: <MovieDetail />,
+      },
 
-      <Route path="movies/:name">
-        <Route path=":id" element={<MovieDetail />} />
-      </Route>
+      {
+        path: "movies/similar-movie/:id",
+        element: <MovieDetail />,
+      },
 
-      <Route path="tv/:name">
-        <Route path=":id" element={<TVShowDetail />} />
-      </Route>
+      {
+        path: "movies/trends/movies/:id",
+        element: <MovieDetail />,
+      },
 
-      <Route path="tv/genres">
-        <Route index element={<TVGenre />} />
-        <Route path=":genre/:id" element={<TVGenreInfo />} />
-        <Route path=":genre/:id/:tvId" element={<TVShowDetail />} />
-      </Route>
+      {
+        path: "tv/trends/movies/:id",
+        element: <TVShowDetail />,
+      },
 
-      {/* see more btns movies*/}
-      <Route path="movies/trends" element={<TrendsLayout />} />
-      <Route path="movies/popular-movies" element={<PopularLayout />} />
-      <Route path="movies/now-playing" element={<NowPlayingMoviesLayout />} />
+      {
+        path: "tv/:id",
+        element: <TVShowDetail />,
+      },
 
-      <Route path="movies/upcoming-movies" element={<UpcomingMoviesLayout />} />
-      <Route path="movies/toprated-movies" element={<TopRatedMoviesLayout />} />
+      {
+        path: "tv/similar/series/:id",
+        element: <TVShowDetail />,
+      },
 
-      {/* see more btns tvshows */}
-      <Route path="tv/trends" element={<TrendingShows />} />
-      <Route path="tv/popular-movies" element={<PopularShows />} />
-      <Route path="tv/airing" element={<AiringToday />} />
-      <Route path="tv/on-air" element={<OnAir />} />
-      <Route path="tv/toprated" element={<TopRatedShows />} />
+      // movie genres
+      {
+        path: "movies/genres",
+        children: [
+          {
+            index: true,
+            element: <MoviesGenre />,
+          },
 
-      {/* Custom 404 Page */}
-      <Route path="*" element={<NotFound />} />
-    </Route>
-  )
-);
+          {
+            path: ":genre/:id",
+            element: <MovieGenreInfo />,
+          },
+
+          {
+            path: ":genre/:id/:movieId",
+            element: <MovieDetail />,
+          },
+        ],
+      },
+
+      // search routes
+      {
+        path: "search",
+        children: [
+          {
+            path: "movie/:id",
+            element: <MovieDetail />,
+          },
+
+          {
+            path: "tv/:id",
+            element: <TVShowDetail />,
+          },
+        ],
+      },
+
+      // movies name
+
+      {
+        path: "movies/:name",
+        children: [
+          {
+            path: ":id",
+            element: <MovieDetail />,
+          },
+        ],
+      },
+
+      // tv names
+
+      {
+        path: "tv/:name",
+        children: [
+          {
+            path: ":id",
+            element: <TVShowDetail />,
+          },
+        ],
+      },
+
+      // TV genres
+      {
+        path: "tv/genres",
+        children: [
+          {
+            index: true,
+            element: <TVGenre />,
+          },
+
+          {
+            path: ":genre/:id",
+            element: <TVGenreInfo />,
+          },
+
+          {
+            path: ":genre/:id/:tvId",
+            element: <TVShowDetail />,
+          },
+        ],
+      },
+
+      // see more btns movies
+      {
+        path: "movies/trends",
+        element: <TrendsLayout />,
+      },
+
+      {
+        path: "movies/popular-movies",
+        element: <PopularLayout />,
+      },
+
+      {
+        path: "movies/now-playing",
+        element: <NowPlayingMoviesLayout />,
+      },
+
+      {
+        path: "movies/upcoming-movies",
+        element: <UpcomingMoviesLayout />,
+      },
+
+      {
+        path: "movies/toprated-movies",
+        element: <TopRatedMoviesLayout />,
+      },
+
+      // see more btns tvshows
+      {
+        path: "tv/trends",
+        element: <TrendingShows />,
+      },
+
+      {
+        path: "tv/popular-movies",
+        element: <PopularShows />,
+      },
+
+      {
+        path: "tv/airing",
+        element: <AiringToday />,
+      },
+
+      {
+        path: "tv/on-air",
+        element: <OnAir />,
+      },
+
+      {
+        path: "tv/toprated",
+        element: <TopRatedShows />,
+      },
+
+      // custom 404 page
+      {
+        path: "*",
+        element: <NotFound />,
+      },
+    ],
+  },
+]);
 
 export default function App() {
   return <RouterProvider router={router} />;
