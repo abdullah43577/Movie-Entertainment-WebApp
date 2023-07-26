@@ -6,7 +6,7 @@ import searchIcon from "../../icons folder/searchIcon.svg";
 import iconTMDBDesktop from "../../icons folder/icon-tmdb-long.svg";
 import iconTMDBMobile from "../../icons folder/icon-tmdb-short.svg";
 import { useMediaQuery } from "@react-hook/media-query";
-import { API_KEY } from "../helper/helperModules";
+import { API_KEY, getData } from "../helper/helperModules";
 
 export default function RootLayout() {
   const [inputValue, setInputValue] = useState("");
@@ -26,10 +26,9 @@ export default function RootLayout() {
   const fetchData = async () => {
     if (!inputValue) return;
 
-    const res = await fetch(
+    const data = await getData(
       `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${inputValue}&page=${currentPage}`
     );
-    const data = await res.json();
 
     const filter = data.results.filter(
       (data) =>

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { API_KEY } from "../../helper/helperModules";
+import { API_KEY, getData } from "../../helper/helperModules";
 import { useParams, Link } from "react-router-dom";
 import movieClip from "../../../icons folder/movieClip.svg";
 import Loader from "../../helper/Loader";
@@ -14,20 +14,15 @@ export default function MovieGenreInfo() {
 
   useEffect(() => {
     const fetchMoviesByGenres = async () => {
-      try {
-        setIsLoading(true);
+      setIsLoading(true);
 
-        const res = await fetch(
-          `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${currentPage}&with_watch_monetization_types=flatrate&with_genres=${id}`
-        );
-        const data = await res.json();
-        setMovieGenreDetails(data.results);
-        setTotalPages(Math.min(data.total_pages, 500));
+      const data = await getData(
+        `https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${currentPage}&with_watch_monetization_types=flatrate&with_genres=${id}`
+      );
 
-        setIsLoading(false);
-      } catch (err) {
-        console.error(err.message);
-      }
+      setMovieGenreDetails(data.results);
+      setTotalPages(Math.min(data.total_pages, 500));
+      setIsLoading(false);
     };
 
     fetchMoviesByGenres();

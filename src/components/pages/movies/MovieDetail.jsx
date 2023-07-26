@@ -5,6 +5,7 @@ import {
   formatDate,
   getHours,
   getMinutes,
+  getData,
 } from "../../helper/helperModules";
 import Loader from "../../helper/Loader";
 import Rating from "../../helper/Rating";
@@ -24,22 +25,17 @@ export default function MovieDetail() {
 
   useEffect(() => {
     const renderMovie = async () => {
-      try {
-        setIsLoading(true);
+      setIsLoading(true);
 
-        const res = await fetch(
-          `https://api.themoviedb.org/3/movie/${
-            movieId || id
-          }?api_key=${API_KEY}&language=en-US`
-        );
-        const data = await res.json();
-        setMovieDetail(data);
-        setVoteAvg(data.vote_average);
+      const data = await getData(
+        `https://api.themoviedb.org/3/movie/${
+          movieId || id
+        }?api_key=${API_KEY}&language=en-US`
+      );
+      setMovieDetail(data);
+      setVoteAvg(data.vote_average);
 
-        setIsLoading(false);
-      } catch (err) {
-        console.error(err);
-      }
+      setIsLoading(false);
     };
 
     renderMovie();

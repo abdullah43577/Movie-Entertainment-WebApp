@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { API_KEY, formatDate } from "../../helper/helperModules";
+import { API_KEY, formatDate, getData } from "../../helper/helperModules";
 import Loader from "../../helper/Loader";
 import Rating from "../../helper/Rating";
 import { useMediaQuery } from "@react-hook/media-query";
@@ -21,22 +21,17 @@ export default function TVShowDetail() {
 
   useEffect(() => {
     const renderMovie = async () => {
-      try {
-        setIsLoading(true);
+      setIsLoading(true);
 
-        const res = await fetch(
-          `https://api.themoviedb.org/3/tv/${
-            tvId || id
-          }?api_key=${API_KEY}&language=en-US`
-        );
-        const data = await res.json();
-        setTVShowDetail(data);
-        setVoteAvg(data.vote_average);
+      const data = await getData(
+        `https://api.themoviedb.org/3/tv/${
+          tvId || id
+        }?api_key=${API_KEY}&language=en-US`
+      );
+      setTVShowDetail(data);
+      setVoteAvg(data.vote_average);
 
-        setIsLoading(false);
-      } catch (err) {
-        console.error(err);
-      }
+      setIsLoading(false);
     };
 
     renderMovie();

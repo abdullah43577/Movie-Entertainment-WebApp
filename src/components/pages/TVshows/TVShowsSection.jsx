@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import movieClip from "../../../icons folder/movieClip.svg";
-import { API_KEY } from "../../helper/helperModules";
+import { API_KEY, getData } from "../../helper/helperModules";
 import Loader from "../../helper/Loader";
 
 export default function TVShowsSection() {
@@ -14,43 +14,41 @@ export default function TVShowsSection() {
 
   useEffect(() => {
     async function fetchTVShows() {
-      try {
-        setIsLoading(true);
+      const trendRes = getData(
+        `https://api.themoviedb.org/3/trending/tv/week?api_key=${API_KEY}`
+      );
 
-        const trendRes = await fetch(
-          `https://api.themoviedb.org/3/trending/tv/week?api_key=${API_KEY}`
-        );
-        const data = await trendRes.json();
-        setTvTrends(data.results);
+      const popularRes = getData(
+        `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=1`
+      );
 
-        const popularRes = await fetch(
-          `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=1`
-        );
-        const data2 = await popularRes.json();
-        setPopularTVShows(data2.results);
+      const airingRes = getData(
+        `https://api.themoviedb.org/3/tv/airing_today?api_key=${API_KEY}&language=en-US&page=1`
+      );
 
-        const airingRes = await fetch(
-          `https://api.themoviedb.org/3/tv/airing_today?api_key=${API_KEY}&language=en-US&page=1`
-        );
-        const data3 = await airingRes.json();
-        setAiringToday(data3.results);
+      const onAirRes = getData(
+        `https://api.themoviedb.org/3/tv/on_the_air?api_key=${API_KEY}&language=en-US&page=1`
+      );
 
-        const onAirRes = await fetch(
-          `https://api.themoviedb.org/3/tv/on_the_air?api_key=${API_KEY}&language=en-US&page=1`
-        );
-        const data4 = await onAirRes.json();
-        setOnAir(data4.results);
+      const topRatedRes = getData(
+        `https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&language=en-US&page=1`
+      );
 
-        const topRatedRes = await fetch(
-          `https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&language=en-US&page=1`
-        );
-        const data5 = await topRatedRes.json();
-        setTopRated(data5.results);
+      const data = await Promise.all([
+        trendRes,
+        popularRes,
+        airingRes,
+        onAirRes,
+        topRatedRes,
+      ]);
 
-        setIsLoading(false);
-      } catch (err) {
-        console.error(err.message);
-      }
+      setTvTrends(data[0].results);
+      setPopularTVShows(data[1].results);
+      setAiringToday(data[2].results);
+      setOnAir(data[3].results);
+      setTopRated(data[4].results);
+
+      setIsLoading(false);
     }
 
     fetchTVShows();

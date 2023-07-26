@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { API_KEY } from "../../helper/helperModules";
+import { API_KEY, getData } from "../../helper/helperModules";
 import { Link } from "react-router-dom";
 import movieClip from "../../../icons folder/movieClip.svg";
 import FullPagination from "../../helper/FullPagination";
@@ -10,20 +10,16 @@ export default function TrendsLayout() {
 
   useEffect(() => {
     const getAllMovieTrends = async () => {
-      try {
-        setIsLoading(true);
+      setIsLoading(true);
 
-        const res = await fetch(
-          `https://api.themoviedb.org/3/trending/tv/week?api_key=${API_KEY}`
-        );
-        const data = await res.json();
-        setMovies(data.results);
+      const data = await getData(
+        `https://api.themoviedb.org/3/trending/tv/week?api_key=${API_KEY}`
+      );
+      setMovies(data.results);
 
-        setIsLoading(false);
-      } catch (err) {
-        console.error(err.message);
-      }
+      setIsLoading(false);
     };
+
     getAllMovieTrends();
   }, []);
 
