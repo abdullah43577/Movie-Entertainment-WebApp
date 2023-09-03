@@ -24,3 +24,5 @@ export const getHours = function (mins) {
 export const getMinutes = function (mins) {
   return `${mins % 60} mins`;
 };
+
+export const SERVER = "http://localhost:8080";

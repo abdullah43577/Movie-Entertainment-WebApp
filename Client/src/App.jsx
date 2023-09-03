@@ -27,6 +27,8 @@ import TopRatedShows from "./components/layouts/TVshows/TopRatedShows";
 
 // search result
 import SearchResults from "./components/layouts/SearchResults";
+import Register from "./components/pages/register";
+import Login from "./components/pages/Login";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +39,16 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+
+      {
+        path: "register",
+        element: <Register />,
+      },
+
+      {
+        path: "login",
+        element: <Login />,
       },
 
       {

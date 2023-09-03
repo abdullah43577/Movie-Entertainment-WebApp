@@ -1,10 +1,42 @@
 import { useLocation, useOutletContext, Link } from "react-router-dom";
 import movieClip from "../../icons folder/movieClip.svg";
 import Pagination from "../helper/Pagination";
+import { SERVER } from "../helper/helperModules";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function SearchResult() {
   const location = useLocation();
   const { inputValue, searchResult, totalResult, totalPages } = location.state;
+  const nav = useNavigate();
+
+  useEffect(() => {
+    // check the validity of jsonwebtoken
+    async function checkToken() {
+      try {
+        // check if the token is valid
+        const { user_token } = localStorage;
+        console.log(user_token);
+        const formatedToken = user_token?.replace(/['"]+/g, "");
+
+        const res = await fetch(`${SERVER}/checkToken`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${formatedToken}`,
+          },
+          credentials: "include",
+        });
+
+        const data = await res.json();
+        console.log(data);
+        if (data.error) nav("/login");
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    checkToken();
+  }, []);
 
   const { handlePageClick } = useOutletContext();
 
