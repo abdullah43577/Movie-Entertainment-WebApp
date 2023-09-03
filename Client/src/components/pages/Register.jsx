@@ -45,6 +45,7 @@ export default function Register() {
       const data = await res.json();
       if (data.errors) throw data.errors;
 
+      localStorage.setItem("user_token", JSON.stringify(data.token));
       // redirect to home page
       if (data.user) nav("/");
     } catch (err) {

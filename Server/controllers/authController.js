@@ -47,11 +47,13 @@ const api_get = async (req, res) => {
 };
 
 const register_user_post = async (req, res) => {
+  const { email, password } = req.body;
   // save registered user to database
   try {
     const user = await User.create({ email, password });
     const token = createToken(user._id);
-    res.cookie('jwt', token, { maxAge: maxAge * 1000 });
+    console.log(token);
+    res.cookie('jwt', token, { httpOnly: true, secure: true, maxAge: maxAge * 1000 });
     res.status(201).json({ message: 'User registered successfully', user: user._id, token });
   } catch (err) {
     const errors = handleErrors(err);
@@ -66,7 +68,7 @@ const login_user_post = async (req, res) => {
     const user = await User.login(email, password);
     const token = createToken(user._id);
     console.log(token);
-    res.cookie('jwt', token, { httpOnly: true, domain: 'movie-database-api.onrender.com', secure: true, maxAge: maxAge * 1000 });
+    res.cookie('jwt', token, { httpOnly: true, secure: true, maxAge: maxAge * 1000 });
     res.status(200).json({ message: 'User logged in successfully', user: user._id, token });
   } catch (err) {
     const errors = handleErrors(err);
@@ -76,7 +78,6 @@ const login_user_post = async (req, res) => {
 
 const checkToken = (req, res) => {
   const { authorization } = req.headers;
-  console.log('authorization', authorization);
 
   if (!authorization) {
     res.status(401).json({ error: 'Authorization token required' });
@@ -88,7 +89,6 @@ const checkToken = (req, res) => {
 
   try {
     const { id } = jwt.verify(token, 'movie_database_secret');
-    console.log('id', id);
     res.status(200).json({ message: 'User logged in successfully', user: id });
   } catch (err) {
     res.status(401).json({ error: 'Request not Authorized', err });
