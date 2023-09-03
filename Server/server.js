@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(morgan('dev')); // log details to the console for every request made to the browser;
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'https://movie-database-api.onrender.com'],
+    origin: ['http://localhost:3000', 'https://flicksondemand.netlify.app'],
     credentials: true,
   })
 ); // allows requests from all origins
