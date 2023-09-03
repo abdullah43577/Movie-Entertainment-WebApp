@@ -9,6 +9,7 @@ export default function SearchResult() {
   const location = useLocation();
   const { inputValue, searchResult, totalResult, totalPages } = location.state;
   const nav = useNavigate();
+  // const [pageState, setPageState] = useState(false);
 
   useEffect(() => {
     // check the validity of jsonwebtoken

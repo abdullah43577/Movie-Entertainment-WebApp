@@ -15,6 +15,7 @@ export default function Home() {
   const [topRated, setTopRated] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const nav = useNavigate();
+  const [pageState, setPageState] = useState(false);
 
   useEffect(() => {
     // check the validity of jsonwebtoken
@@ -35,7 +36,11 @@ export default function Home() {
 
         const data = await res.json();
         console.log(data);
-        if (data.error) nav("/login");
+        if (data.error) {
+          nav("/login");
+        } else {
+          setPageState(true);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -45,49 +50,51 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    async function fetchMovies() {
-      setIsLoading(true);
+    if (pageState) {
+      const fetchMovies = async () => {
+        setIsLoading(true);
 
-      const trendRes = getData(
-        `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`
-      );
+        const trendRes = getData(
+          `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`
+        );
 
-      const popularRes = getData(
-        `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`
-      );
+        const popularRes = getData(
+          `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`
+        );
 
-      const nowPlayingMoviesRes = getData(
-        `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`
-      );
+        const nowPlayingMoviesRes = getData(
+          `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`
+        );
 
-      const upComingRes = getData(
-        `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`
-      );
+        const upComingRes = getData(
+          `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`
+        );
 
-      const topRatedRes = getData(
-        `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`
-      );
+        const topRatedRes = getData(
+          `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`
+        );
 
-      // tells javascript to run all this code concurrently to avoid blocking codes
-      const data = await Promise.all([
-        trendRes,
-        popularRes,
-        nowPlayingMoviesRes,
-        upComingRes,
-        topRatedRes,
-      ]);
+        // tells javascript to run all this code concurrently to avoid blocking codes
+        const data = await Promise.all([
+          trendRes,
+          popularRes,
+          nowPlayingMoviesRes,
+          upComingRes,
+          topRatedRes,
+        ]);
 
-      setMovieTrends(data[0].results);
-      setPopularMovies(data[1].results);
-      setNowPlaying(data[2].results);
-      setUpComing(data[3].results);
-      setTopRated(data[4].results);
+        setMovieTrends(data[0].results);
+        setPopularMovies(data[1].results);
+        setNowPlaying(data[2].results);
+        setUpComing(data[3].results);
+        setTopRated(data[4].results);
 
-      setIsLoading(false);
+        setIsLoading(false);
+      };
+
+      fetchMovies();
     }
-
-    fetchMovies();
-  }, []);
+  }, [pageState]);
 
   const TrendingMoviesArr = movieTrends?.slice(0, 10).map((trend) => {
     const releaseDate =

@@ -51,7 +51,7 @@ const register_user_post = async (req, res) => {
   try {
     const user = await User.create({ email, password });
     const token = createToken(user._id);
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000, domain: '.localhost' });
+    res.cookie('jwt', token, { maxAge: maxAge * 1000 });
     res.status(201).json({ message: 'User registered successfully', user: user._id, token });
   } catch (err) {
     const errors = handleErrors(err);
@@ -65,7 +65,8 @@ const login_user_post = async (req, res) => {
   try {
     const user = await User.login(email, password);
     const token = createToken(user._id);
-    res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000, domain: '.localhost' });
+    console.log(token);
+    res.cookie('jwt', token, { httpOnly: true, domain: 'movie-database-api.onrender.com', secure: true, maxAge: maxAge * 1000 });
     res.status(200).json({ message: 'User logged in successfully', user: user._id, token });
   } catch (err) {
     const errors = handleErrors(err);

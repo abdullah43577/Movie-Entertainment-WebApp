@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { SERVER } from "../helper/helperModules";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
   const nav = useNavigate();
@@ -61,46 +61,54 @@ export default function Register() {
   };
 
   return (
-    <form
-      onSubmit={handleFormSubmit}
-      className="mx-auto max-w-[500px] rounded-md border border-nav bg-background px-8 py-4"
-    >
-      <h1 className="text-2xl text-white">Sign Up</h1>
-
-      <div>
-        <label htmlFor="email" className="mb-2 mt-6 block">
-          Email
-        </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-          className="w-full rounded-md bg-nav px-3 py-1 text-white outline-none"
-        />
-        <p className="text-sm text-iconNavLink">{errorEmail}</p>
-
-        <label htmlFor="password" className="mb-2 mt-4 block">
-          Password
-        </label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={formData.password}
-          onChange={handleInputChange}
-          className="w-full rounded-md bg-nav px-3 py-1 text-white outline-none"
-        />
-        <p className="text-sm text-iconNavLink">{errorPassword}</p>
-      </div>
-
-      <button
-        className={`my-6 w-full rounded-md ${btnBG} px-3 py-2`}
-        disabled={btnState}
+    <>
+      <form
+        onSubmit={handleFormSubmit}
+        className="mx-auto max-w-[500px] rounded-md border border-nav bg-background px-8 py-4"
       >
-        {btnTxt}
-      </button>
-    </form>
+        <h1 className="text-2xl text-white">Sign Up</h1>
+
+        <div>
+          <label htmlFor="email" className="mb-2 mt-6 block">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            className="w-full rounded-md bg-nav px-3 py-1 text-white outline-none"
+          />
+          <p className="text-sm text-iconNavLink">{errorEmail}</p>
+
+          <label htmlFor="password" className="mb-2 mt-4 block">
+            Password
+          </label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+            className="w-full rounded-md bg-nav px-3 py-1 text-white outline-none"
+          />
+          <p className="text-sm text-iconNavLink">{errorPassword}</p>
+        </div>
+
+        <button
+          className={`my-6 w-full rounded-md ${btnBG} px-3 py-2`}
+          disabled={btnState}
+        >
+          {btnTxt}
+        </button>
+      </form>
+      <p className="mt-3 text-center text-sm text-white">
+        Already have an account?{" "}
+        <Link to={"/login"} className="text-iconNavLink underline">
+          Sign In
+        </Link>
+      </p>
+    </>
   );
 }

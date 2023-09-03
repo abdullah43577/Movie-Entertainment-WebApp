@@ -7,6 +7,7 @@ import { SERVER } from "../../helper/helperModules";
 export default function MoviesGenre() {
   const [movieGenre, setMovieGenre] = useState([]);
   const nav = useNavigate();
+  const [pageState, setPageState] = useState(false);
 
   useEffect(() => {
     // check the validity of jsonwebtoken
@@ -27,7 +28,11 @@ export default function MoviesGenre() {
 
         const data = await res.json();
         console.log(data);
-        if (data.error) nav("/login");
+        if (data.error) {
+          nav("/login");
+        } else {
+          setPageState(true);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -37,16 +42,18 @@ export default function MoviesGenre() {
   }, []);
 
   useEffect(() => {
-    const getMovieGenre = async () => {
-      const data = await getData(
-        `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
-      );
+    if (pageState) {
+      const getMovieGenre = async () => {
+        const data = await getData(
+          `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_KEY}&language=en-US`
+        );
 
-      setMovieGenre(data.genres);
-    };
+        setMovieGenre(data.genres);
+      };
 
-    getMovieGenre();
-  }, []);
+      getMovieGenre();
+    }
+  }, [pageState]);
 
   const moviesGenresArr = movieGenre?.map((genre) => {
     return (

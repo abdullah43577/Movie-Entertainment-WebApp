@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 export default function TVGenre() {
   const [tvGenre, setTVGenre] = useState([]);
   const nav = useNavigate();
+  const [pageState, setPageState] = useState(false);
 
   useEffect(() => {
     // check the validity of jsonwebtoken
@@ -27,7 +28,11 @@ export default function TVGenre() {
 
         const data = await res.json();
         console.log(data);
-        if (data.error) nav("/login");
+        if (data.error) {
+          nav("/login");
+        } else {
+          setPageState(true);
+        }
       } catch (err) {
         console.log(err);
       }
@@ -37,15 +42,17 @@ export default function TVGenre() {
   }, []);
 
   useEffect(() => {
-    const getTVGenre = async () => {
-      const data = await getData(
-        `https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}&language=en-US`
-      );
-      setTVGenre(data.genres);
-    };
+    if (pageState) {
+      const getTVGenre = async () => {
+        const data = await getData(
+          `https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}&language=en-US`
+        );
+        setTVGenre(data.genres);
+      };
 
-    getTVGenre();
-  }, []);
+      getTVGenre();
+    }
+  }, [pageState]);
 
   const TVGenresArr = tvGenre?.map((genre) => {
     return (

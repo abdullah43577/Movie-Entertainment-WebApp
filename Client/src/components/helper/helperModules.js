@@ -25,4 +25,5 @@ export const getMinutes = function (mins) {
   return `${mins % 60} mins`;
 };
 
-export const SERVER = "http://localhost:8080";
+// export const SERVER = "http://localhost:8080";
+export const SERVER = "https://movie-database-api.onrender.com";
