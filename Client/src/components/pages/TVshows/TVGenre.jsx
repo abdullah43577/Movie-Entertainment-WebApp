@@ -15,7 +15,6 @@ export default function TVGenre() {
       try {
         // check if the token is valid
         const { user_token } = localStorage;
-        console.log(user_token);
         const formatedToken = user_token?.replace(/['"]+/g, "");
 
         const res = await fetch(`${SERVER}/checkToken`, {
@@ -27,7 +26,6 @@ export default function TVGenre() {
         });
 
         const data = await res.json();
-        console.log(data);
         if (data.error) {
           nav("/login");
         } else {

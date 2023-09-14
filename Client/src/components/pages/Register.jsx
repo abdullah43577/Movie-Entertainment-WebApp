@@ -23,7 +23,6 @@ export default function Register() {
 
   const handleFormSubmit = async function (e) {
     e.preventDefault();
-    console.log(formData);
 
     // empty error messages
     setErrorEmail("");

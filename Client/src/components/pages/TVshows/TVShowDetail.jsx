@@ -79,7 +79,7 @@ export default function TVShowDetail() {
 
   const Navigator = function (id) {
     // Replace the current URL with this
-    navigate(`tv/similar-series/:${id}`, { replace: true });
+    navigate(`tv/similar/${id}`, { replace: true });
   };
 
   const similarMoviesArr = similarMovies?.map((movie) => {
@@ -88,7 +88,7 @@ export default function TVShowDetail() {
 
     return (
       <Link
-        to={`tv/similar-series/${movie.id}`}
+        to={`tv/similar/${movie.id}`}
         key={movie.id}
         className="link"
         onClick={() => Navigator(movie.id)}

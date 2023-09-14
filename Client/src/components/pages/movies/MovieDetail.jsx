@@ -14,6 +14,7 @@ import { useMediaQuery } from "@react-hook/media-query";
 
 export default function MovieDetail() {
   const { id, movieId } = useParams();
+  console.log("id", id);
   const [movieDetail, setMovieDetail] = useState([]);
   const [movieCredits, setMovieCredits] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -83,7 +84,7 @@ export default function MovieDetail() {
 
   const Navigator = function (id) {
     // Replace the current URL with this
-    navigate(`movies/similar-movie/:${id}`, { replace: true });
+    navigate(`movies/similar/${id}`, { replace: true });
   };
 
   const similarMoviesArr = similarMovies?.map((movie) => {
@@ -92,11 +93,10 @@ export default function MovieDetail() {
 
     return (
       <Link
-        to={`movies/similar-movie/${movie.id}`}
+        to={`movies/similar/${movie.id}`}
         key={movie.id}
         className="link"
         onClick={() => Navigator(movie.id)}
-        replace
       >
         <div className="card_element relative mx-auto h-[250px] rounded-md bg-nav lg:h-[300px]">
           <img

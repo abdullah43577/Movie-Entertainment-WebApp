@@ -106,7 +106,7 @@ export default function Login() {
         </button>
       </form>
       <p className="mt-3 text-center text-sm text-white">
-        Already have an account?{" "}
+        Don`t have an account?{" "}
         <Link to={"/register"} className="text-iconNavLink underline">
           Sign Up
         </Link>
