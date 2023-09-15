@@ -42,7 +42,6 @@ const createToken = (id) => {
 };
 
 const api_get = async (req, res) => {
-  console.log('api_get');
   res.status(200).json({ message: 'Welcome to FlicksOnDemand Server' });
 };
 
@@ -52,7 +51,6 @@ const register_user_post = async (req, res) => {
   try {
     const user = await User.create({ email, password });
     const token = createToken(user._id);
-    console.log(token);
     res.cookie('jwt', token, { httpOnly: true, secure: true, maxAge: maxAge * 1000 });
     res.status(201).json({ message: 'User registered successfully', user: user._id, token });
   } catch (err) {
@@ -67,7 +65,6 @@ const login_user_post = async (req, res) => {
   try {
     const user = await User.login(email, password);
     const token = createToken(user._id);
-    console.log(token);
     res.cookie('jwt', token, { httpOnly: true, secure: true, maxAge: maxAge * 1000 });
     res.status(200).json({ message: 'User logged in successfully', user: user._id, token });
   } catch (err) {
@@ -85,7 +82,6 @@ const checkToken = (req, res) => {
   }
 
   const token = authorization.split(' ')[1];
-  console.log('token', token);
 
   try {
     const { id } = jwt.verify(token, 'movie_database_secret');
