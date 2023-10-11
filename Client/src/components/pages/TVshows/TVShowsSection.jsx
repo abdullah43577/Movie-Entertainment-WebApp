@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import movieClip from "../../../icons folder/movieClip.svg";
-import { API_KEY, getData } from "../../helper/helperModules";
+import { API_KEY, getData, SERVER } from "../../helper/helperModules";
 import Loader from "../../helper/Loader";
+import { useNavigate } from "react-router-dom";
 
 export default function TVShowsSection() {
   const [tvTrends, setTvTrends] = useState([]);
@@ -11,48 +12,82 @@ export default function TVShowsSection() {
   const [onAir, setOnAir] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const nav = useNavigate();
+  const [pageState, setPageState] = useState(false);
 
   useEffect(() => {
-    async function fetchTVShows() {
-      const trendRes = getData(
-        `https://api.themoviedb.org/3/trending/tv/week?api_key=${API_KEY}`
-      );
+    // check the validity of jsonwebtoken
+    async function checkToken() {
+      try {
+        // check if the token is valid
+        const { user_token } = localStorage;
+        const formatedToken = user_token?.replace(/['"]+/g, "");
 
-      const popularRes = getData(
-        `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=1`
-      );
+        const res = await fetch(`${SERVER}/checkToken`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${formatedToken}`,
+          },
+          credentials: "include",
+        });
 
-      const airingRes = getData(
-        `https://api.themoviedb.org/3/tv/airing_today?api_key=${API_KEY}&language=en-US&page=1`
-      );
-
-      const onAirRes = getData(
-        `https://api.themoviedb.org/3/tv/on_the_air?api_key=${API_KEY}&language=en-US&page=1`
-      );
-
-      const topRatedRes = getData(
-        `https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&language=en-US&page=1`
-      );
-
-      const data = await Promise.all([
-        trendRes,
-        popularRes,
-        airingRes,
-        onAirRes,
-        topRatedRes,
-      ]);
-
-      setTvTrends(data[0].results);
-      setPopularTVShows(data[1].results);
-      setAiringToday(data[2].results);
-      setOnAir(data[3].results);
-      setTopRated(data[4].results);
-
-      setIsLoading(false);
+        const data = await res.json();
+        if (data.error) {
+          nav("/login");
+        } else {
+          setPageState(true);
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
 
-    fetchTVShows();
+    checkToken();
   }, []);
+
+  useEffect(() => {
+    if (pageState) {
+      const fetchTVShows = async () => {
+        const trendRes = getData(
+          `https://api.themoviedb.org/3/trending/tv/week?api_key=${API_KEY}`
+        );
+
+        const popularRes = getData(
+          `https://api.themoviedb.org/3/tv/popular?api_key=${API_KEY}&language=en-US&page=1`
+        );
+
+        const airingRes = getData(
+          `https://api.themoviedb.org/3/tv/airing_today?api_key=${API_KEY}&language=en-US&page=1`
+        );
+
+        const onAirRes = getData(
+          `https://api.themoviedb.org/3/tv/on_the_air?api_key=${API_KEY}&language=en-US&page=1`
+        );
+
+        const topRatedRes = getData(
+          `https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&language=en-US&page=1`
+        );
+
+        const data = await Promise.all([
+          trendRes,
+          popularRes,
+          airingRes,
+          onAirRes,
+          topRatedRes,
+        ]);
+
+        setTvTrends(data[0].results);
+        setPopularTVShows(data[1].results);
+        setAiringToday(data[2].results);
+        setOnAir(data[3].results);
+        setTopRated(data[4].results);
+
+        setIsLoading(false);
+      };
+
+      fetchTVShows();
+    }
+  }, [pageState]);
 
   const trendingTVShows = tvTrends?.slice(0, 10).map((trend) => {
     const releaseDate =

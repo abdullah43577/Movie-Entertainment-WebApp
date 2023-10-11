@@ -87,7 +87,8 @@ const checkToken = (req, res) => {
     const { id } = jwt.verify(token, 'movie_database_secret');
     res.status(200).json({ message: 'User logged in successfully', user: id });
   } catch (err) {
-    res.status(401).json({ error: 'Request not Authorized', err });
+    console.log(err);
+    res.status(401).json({ error: 'Request not Authorized' });
   }
 };
 
