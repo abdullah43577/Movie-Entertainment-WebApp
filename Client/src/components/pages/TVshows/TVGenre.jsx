@@ -1,56 +1,20 @@
 import { useState, useEffect } from "react";
-import { API_KEY, getData } from "../../helper/helperModules";
 import { Link } from "react-router-dom";
-import { SERVER } from "../../helper/helperModules";
-import { useNavigate } from "react-router-dom";
+import { useFetch } from "../../hooks/useFetch";
+const { VITE_API_KEY } = import.meta.env;
 
 export default function TVGenre() {
   const [tvGenre, setTVGenre] = useState([]);
-  const nav = useNavigate();
-  const [pageState, setPageState] = useState(false);
 
   useEffect(() => {
-    // check the validity of jsonwebtoken
-    async function checkToken() {
-      try {
-        // check if the token is valid
-        const { user_token } = localStorage;
-        const formatedToken = user_token?.replace(/['"]+/g, "");
-
-        const res = await fetch(`${SERVER}/checkToken`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${formatedToken}`,
-          },
-          credentials: "include",
-        });
-
-        const data = await res.json();
-        if (data.error) {
-          nav("/login");
-        } else {
-          setPageState(true);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
-    checkToken();
+    const GetTVGenre = async () => {
+      const data = await useFetch(
+        `https://api.themoviedb.org/3/genre/tv/list?api_key=${VITE_API_KEY}&language=en-US`
+      );
+      setTVGenre(data.genres);
+    };
+    GetTVGenre();
   }, []);
-
-  useEffect(() => {
-    if (pageState) {
-      const getTVGenre = async () => {
-        const data = await getData(
-          `https://api.themoviedb.org/3/genre/tv/list?api_key=${API_KEY}&language=en-US`
-        );
-        setTVGenre(data.genres);
-      };
-
-      getTVGenre();
-    }
-  }, [pageState]);
 
   const TVGenresArr = tvGenre?.map((genre) => {
     return (

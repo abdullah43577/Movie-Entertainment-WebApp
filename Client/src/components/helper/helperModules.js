@@ -1,13 +1,4 @@
-export const API_KEY = "d62fd8046c31d61026bd9c50ab82251d";
-
-export const getData = async function (endpoint) {
-  try {
-    const res = await fetch(endpoint);
-    return await res.json();
-  } catch (err) {
-    console.error(err);
-  }
-};
+// export const API_KEY = "d62fd8046c31d61026bd9c50ab82251d";
 
 export const formatDate = (dateString) => {
   const date = new Date(dateString);

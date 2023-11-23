@@ -74,22 +74,7 @@ const login_user_post = async (req, res) => {
 };
 
 const checkToken = (req, res) => {
-  const { authorization } = req.headers;
-
-  if (!authorization) {
-    res.status(401).json({ error: 'Authorization token required' });
-    return;
-  }
-
-  const token = authorization.split(' ')[1];
-
-  try {
-    const { id } = jwt.verify(token, 'movie_database_secret');
-    res.status(200).json({ message: 'User logged in successfully', user: id });
-  } catch (err) {
-    console.log(err);
-    res.status(401).json({ error: 'Request not Authorized' });
-  }
+  res.status(200).json({ message: 'Token Valid!' });
 };
 
 const logout_user_get = (req, res) => {

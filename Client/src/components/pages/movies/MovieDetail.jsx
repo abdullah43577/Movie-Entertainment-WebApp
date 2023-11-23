@@ -1,20 +1,15 @@
 import { useState, useEffect } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
-import {
-  API_KEY,
-  formatDate,
-  getHours,
-  getMinutes,
-  getData,
-} from "../../helper/helperModules";
+import { formatDate, getHours, getMinutes } from "../../helper/helperModules";
 import Loader from "../../helper/Loader";
 import Rating from "../../helper/Rating";
 import movieClip from "../../../icons folder/movieClip.svg";
 import { useMediaQuery } from "@react-hook/media-query";
+import { useFetch } from "../../hooks/useFetch";
+const { VITE_API_KEY } = import.meta.env;
 
 export default function MovieDetail() {
   const { id, movieId } = useParams();
-  console.log("id", id);
   const [movieDetail, setMovieDetail] = useState([]);
   const [movieCredits, setMovieCredits] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -25,13 +20,13 @@ export default function MovieDetail() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const renderMovie = async () => {
+    const RenderMovie = async () => {
       setIsLoading(true);
 
-      const data = await getData(
+      const data = await useFetch(
         `https://api.themoviedb.org/3/movie/${
           movieId || id
-        }?api_key=${API_KEY}&language=en-US`
+        }?api_key=${VITE_API_KEY}&language=en-US`
       );
       setMovieDetail(data);
       setVoteAvg(data.vote_average);
@@ -39,47 +34,35 @@ export default function MovieDetail() {
       setIsLoading(false);
     };
 
-    renderMovie();
+    RenderMovie();
   }, [id, movieId]);
 
   useEffect(() => {
-    const getCredits = async () => {
-      try {
-        const res = await fetch(
-          `https://api.themoviedb.org/3/movie/${
-            movieId || id
-          }/credits?api_key=${API_KEY}&language=en-US`
-        );
-        const data = await res.json();
-        setMovieCredits(data);
-      } catch (err) {
-        console.error(err);
-      }
+    const GetCredits = async () => {
+      const data = useFetch(
+        `https://api.themoviedb.org/3/movie/${
+          movieId || id
+        }/credits?api_key=${VITE_API_KEY}&language=en-US`
+      );
+      setMovieCredits(data);
     };
 
-    getCredits();
+    GetCredits();
   }, [id, movieId]);
 
   // get similar movies
   useEffect(() => {
-    const getSimilarMovies = async () => {
-      try {
-        const res = await fetch(
-          `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${API_KEY}&language=en-US&page=1`
-        );
-        const data = await res.json();
-        // console.log("similar movies", data);
-
-        const result = isSmallScreen
-          ? data.results.slice(0, 5)
-          : data.results.slice(0, 10);
-        setSimilarMovies(result);
-      } catch (err) {
-        console.error(err);
-      }
+    const GetSimilarMovies = async () => {
+      const data = useFetch(
+        `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${VITE_API_KEY}&language=en-US&page=1`
+      );
+      const result = isSmallScreen
+        ? data.results.slice(0, 5)
+        : data.results.slice(0, 10);
+      setSimilarMovies(result);
     };
 
-    getSimilarMovies();
+    GetSimilarMovies();
   }, [id, movieId, isSmallScreen]);
 
   const Navigator = function (id) {

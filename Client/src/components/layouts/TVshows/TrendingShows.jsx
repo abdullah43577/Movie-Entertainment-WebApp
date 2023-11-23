@@ -1,26 +1,27 @@
 import { useEffect, useState } from "react";
-import { API_KEY, getData } from "../../helper/helperModules";
 import { Link } from "react-router-dom";
 import movieClip from "../../../icons folder/movieClip.svg";
 import FullPagination from "../../helper/FullPagination";
+import { useFetch } from "../../hooks/useFetch";
+const { VITE_API_kEY } = import.meta.env;
 
 export default function TrendsLayout() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const getAllMovieTrends = async () => {
+    const GetAllMovieTrends = async () => {
       setIsLoading(true);
 
-      const data = await getData(
-        `https://api.themoviedb.org/3/trending/tv/week?api_key=${API_KEY}`
+      const data = await useFetch(
+        `https://api.themoviedb.org/3/trending/tv/week?api_key=${VITE_API_kEY}`
       );
       setMovies(data.results);
 
       setIsLoading(false);
     };
 
-    getAllMovieTrends();
+    GetAllMovieTrends();
   }, []);
 
   const TrendingMoviesArr = movies?.map((trend) => {

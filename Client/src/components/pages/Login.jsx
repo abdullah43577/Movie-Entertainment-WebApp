@@ -1,9 +1,25 @@
-import { useState } from "react";
-import { SERVER } from "../helper/helperModules";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+const { VITE_API_TEST_SERVER } = import.meta.env;
 
 export default function Login() {
   const nav = useNavigate();
+
+  useEffect(() => {
+    const checkToken = async function () {
+      const res = await fetch(`${VITE_API_TEST_SERVER}/checkToken`);
+      const data = await res.json();
+      if (data.message === "Token Valid!") {
+        nav("/");
+      } else {
+        console.log(
+          "users sessions has expired or user doesn't have an account"
+        );
+      }
+    };
+
+    checkToken();
+  }, []);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -32,7 +48,7 @@ export default function Login() {
       setBtnTxt("Logging in...");
       setBtnBG("bg-gray-400");
       setBtnState(true);
-      const res = await fetch(`${SERVER}/login`, {
+      const res = await fetch(`${VITE_API_TEST_SERVER}/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

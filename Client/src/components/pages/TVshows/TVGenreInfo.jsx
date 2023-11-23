@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { API_KEY, getData } from "../../helper/helperModules";
 import { useParams, Link } from "react-router-dom";
 import movieClip from "../../../icons folder/movieClip.svg";
 import Loader from "../../helper/Loader";
 import Pagination from "../../helper/Pagination";
+import { useFetch } from "../../hooks/useFetch";
+const { VITE_API_kEY } = import.meta.env;
 
 export default function TVGenreInfo() {
   const { id } = useParams();
@@ -13,11 +14,11 @@ export default function TVGenreInfo() {
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    const fetchMoviesByGenres = async () => {
+    const FetchMoviesByGenre = async () => {
       setIsLoading(true);
 
-      const data = await getData(
-        `https://api.themoviedb.org/3/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${currentPage}&with_watch_monetization_types=flatrate&with_genres=${id}`
+      const data = await useFetch(
+        `https://api.themoviedb.org/3/discover/tv?api_key=${VITE_API_kEY}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${currentPage}&with_watch_monetization_types=flatrate&with_genres=${id}`
       );
       setTVShowsGenreDetails(data.results);
       setTotalPages(Math.min(data.total_pages, 500));
@@ -25,7 +26,7 @@ export default function TVGenreInfo() {
       setIsLoading(false);
     };
 
-    fetchMoviesByGenres();
+    FetchMoviesByGenre();
   }, [id, currentPage]);
 
   const selectedGenre = tvShowsGenreDetails?.map((tv) => {

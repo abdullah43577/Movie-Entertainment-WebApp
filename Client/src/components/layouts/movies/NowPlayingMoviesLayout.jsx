@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { API_KEY, getData } from "../../helper/helperModules";
 import { Link } from "react-router-dom";
 import movieClip from "../../../icons folder/movieClip.svg";
 import Pagination from "../../helper/Pagination";
 import Loader from "../../helper/Loader";
+import { useFetch } from "../../hooks/useFetch";
+const { VITE_API_kEY } = import.meta.env;
 
 export default function NowPlayingMovies() {
   const [movies, setMovies] = useState([]);
@@ -12,11 +13,11 @@ export default function NowPlayingMovies() {
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    const getAllMovieTrends = async () => {
+    const GetAllMovieTrends = async () => {
       setIsLoading(true);
 
-      const data = await getData(
-        `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=${currentPage}`
+      const data = await useFetch(
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${VITE_API_kEY}&language=en-US&page=${currentPage}`
       );
 
       setMovies(data.results);
@@ -24,7 +25,7 @@ export default function NowPlayingMovies() {
 
       setIsLoading(false);
     };
-    getAllMovieTrends();
+    GetAllMovieTrends();
   }, [currentPage]);
 
   const nowPlayingMoviesArr = movies?.map((movie) => {

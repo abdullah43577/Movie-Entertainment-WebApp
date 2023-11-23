@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import movieClip from "../../icons folder/movieClip.svg";
-import { API_KEY, getData } from "../helper/helperModules";
 import TVShows from "./TVshows/TVShowsSection";
 import Loader from "../helper/Loader";
-import { SERVER } from "../helper/helperModules";
-import { useNavigate } from "react-router-dom";
+import { useFetch } from "../hooks/useFetch";
+const { VITE_API_KEY } = import.meta.env;
 
 export default function Home() {
   const [movieTrends, setMovieTrends] = useState([]);
@@ -14,85 +13,51 @@ export default function Home() {
   const [upComing, setUpComing] = useState([]);
   const [topRated, setTopRated] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const nav = useNavigate();
-  const [pageState, setPageState] = useState(false);
 
   useEffect(() => {
-    // check the validity of jsonwebtoken
-    async function checkToken() {
-      try {
-        // check if the token is valid
-        const { user_token } = localStorage;
-        const formatedToken = user_token?.replace(/['"]+/g, "");
+    const FetchMovies = async () => {
+      setIsLoading(true);
 
-        const res = await fetch(`${SERVER}/checkToken`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${formatedToken}`,
-          },
-          credentials: "include",
-        });
+      const trendRes = useFetch(
+        `https://api.themoviedb.org/3/trending/movie/week?api_key=${VITE_API_KEY}`
+      );
 
-        const data = await res.json();
-        if (data.error) {
-          nav("/login");
-        } else {
-          setPageState(true);
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
+      const popularRes = useFetch(
+        `https://api.themoviedb.org/3/movie/popular?api_key=${VITE_API_KEY}&language=en-US&page=1`
+      );
 
-    checkToken();
+      const nowPlayingMoviesRes = useFetch(
+        `https://api.themoviedb.org/3/movie/now_playing?api_key=${VITE_API_KEY}&language=en-US&page=1`
+      );
+
+      const upComingRes = useFetch(
+        `https://api.themoviedb.org/3/movie/upcoming?api_key=${VITE_API_KEY}&language=en-US&page=1`
+      );
+
+      const topRatedRes = useFetch(
+        `https://api.themoviedb.org/3/movie/top_rated?api_key=${VITE_API_KEY}&language=en-US&page=1`
+      );
+
+      // tells javascript to run all this code concurrently to avoid blocking codes
+      const data = await Promise.all([
+        trendRes,
+        popularRes,
+        nowPlayingMoviesRes,
+        upComingRes,
+        topRatedRes,
+      ]);
+
+      setMovieTrends(data[0].results);
+      setPopularMovies(data[1].results);
+      setNowPlaying(data[2].results);
+      setUpComing(data[3].results);
+      setTopRated(data[4].results);
+
+      setIsLoading(false);
+    };
+
+    FetchMovies();
   }, []);
-
-  useEffect(() => {
-    if (pageState) {
-      const fetchMovies = async () => {
-        setIsLoading(true);
-
-        const trendRes = getData(
-          `https://api.themoviedb.org/3/trending/movie/week?api_key=${API_KEY}`
-        );
-
-        const popularRes = getData(
-          `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`
-        );
-
-        const nowPlayingMoviesRes = getData(
-          `https://api.themoviedb.org/3/movie/now_playing?api_key=${API_KEY}&language=en-US&page=1`
-        );
-
-        const upComingRes = getData(
-          `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_KEY}&language=en-US&page=1`
-        );
-
-        const topRatedRes = getData(
-          `https://api.themoviedb.org/3/movie/top_rated?api_key=${API_KEY}&language=en-US&page=1`
-        );
-
-        // tells javascript to run all this code concurrently to avoid blocking codes
-        const data = await Promise.all([
-          trendRes,
-          popularRes,
-          nowPlayingMoviesRes,
-          upComingRes,
-          topRatedRes,
-        ]);
-
-        setMovieTrends(data[0].results);
-        setPopularMovies(data[1].results);
-        setNowPlaying(data[2].results);
-        setUpComing(data[3].results);
-        setTopRated(data[4].results);
-
-        setIsLoading(false);
-      };
-
-      fetchMovies();
-    }
-  }, [pageState]);
 
   const TrendingMoviesArr = movieTrends?.slice(0, 10).map((trend) => {
     const releaseDate =

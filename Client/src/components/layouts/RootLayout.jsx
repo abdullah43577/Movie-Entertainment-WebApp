@@ -6,7 +6,8 @@ import searchIcon from "../../icons folder/searchIcon.svg";
 import iconTMDBDesktop from "../../icons folder/icon-tmdb-long.svg";
 import iconTMDBMobile from "../../icons folder/icon-tmdb-short.svg";
 import { useMediaQuery } from "@react-hook/media-query";
-import { API_KEY, getData } from "../helper/helperModules";
+import { useFetch } from "../hooks/useFetch";
+const { VITE_API_KEY } = import.meta.env;
 
 export default function RootLayout() {
   const [inputValue, setInputValue] = useState("");
@@ -23,11 +24,11 @@ export default function RootLayout() {
   const [totalResult, setTotalResult] = useState(null);
   const [totalPages, setTotalPages] = useState(null);
 
-  const fetchData = async () => {
+  const FetchData = async () => {
     if (!inputValue) return;
 
-    const data = await getData(
-      `https://api.themoviedb.org/3/search/multi?api_key=${API_KEY}&query=${inputValue}&page=${currentPage}`
+    const data = await useFetch(
+      `https://api.themoviedb.org/3/search/multi?api_key=${VITE_API_KEY}&query=${inputValue}&page=${currentPage}`
     );
 
     const filter = data.results.filter(
@@ -53,21 +54,19 @@ export default function RootLayout() {
   const handleSubmit = function (e) {
     e.preventDefault();
 
-    fetchData();
+    FetchData();
   };
 
   const handlePageClick = function (selectedPage) {
     const currentPage = selectedPage.selected;
-    console.log(currentPage);
     // if currentPage >= 0, means if the selected page in the pagination is >= 1
     if (currentPage >= 0 && currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
-      console.log("currentPage", currentPage);
     }
   };
 
   useEffect(() => {
-    fetchData();
+    FetchData();
   }, [currentPage]);
 
   const isSmallScreen = useMediaQuery("(max-width:480px)");

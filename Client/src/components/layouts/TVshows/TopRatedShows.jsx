@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { API_KEY, getData } from "../../helper/helperModules";
 import { Link } from "react-router-dom";
 import movieClip from "../../../icons folder/movieClip.svg";
 import Pagination from "../../helper/Pagination";
 import Loader from "../../helper/Loader";
+import { useFetch } from "../../hooks/useFetch";
+const { VITE_API_kEY } = import.meta.env;
 
 export default function TopRatedShows() {
   const [movies, setMovies] = useState([]);
@@ -12,11 +13,11 @@ export default function TopRatedShows() {
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    const getAllMovieTrends = async () => {
+    const GetAllMovieTrends = async () => {
       setIsLoading(true);
 
-      const data = await getData(
-        `https://api.themoviedb.org/3/tv/top_rated?api_key=${API_KEY}&language=en-US&page=${currentPage}`
+      const data = await useFetch(
+        `https://api.themoviedb.org/3/tv/top_rated?api_key=${VITE_API_kEY}&language=en-US&page=${currentPage}`
       );
       setMovies(data.results);
       setTotalPages(Math.min(data.total_pages, 500));
@@ -24,7 +25,7 @@ export default function TopRatedShows() {
       setIsLoading(false);
     };
 
-    getAllMovieTrends();
+    GetAllMovieTrends();
   }, [currentPage]);
 
   const topRatedArr = movies?.map((movie) => {
