@@ -1,25 +1,11 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 const { VITE_API_TEST_SERVER } = import.meta.env;
+import { useAuth } from "../Auth/AuthContext";
 
 export default function Register() {
   const nav = useNavigate();
-
-  useEffect(() => {
-    const checkToken = async function () {
-      const res = await fetch(`${VITE_API_TEST_SERVER}/checkToken`);
-      const data = await res.json();
-      if (data.message === "Token Valid!") {
-        nav("/");
-      } else {
-        console.log(
-          "users sessions has expired or user doesn't have an account"
-        );
-      }
-    };
-
-    checkToken();
-  }, []);
+  const { setAuthenticated } = useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -62,7 +48,10 @@ export default function Register() {
 
       localStorage.setItem("user_token", JSON.stringify(data.token));
       // redirect to home page
-      if (data.user) nav("/");
+      if (data.user) {
+        setAuthenticated(true);
+        nav("/");
+      }
     } catch (err) {
       console.log("catch block", err);
 

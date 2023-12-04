@@ -1,26 +1,22 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useCheckToken } from "../../hooks/useCheckToken";
 import { useFetch } from "../../hooks/useFetch";
 const { VITE_API_KEY } = import.meta.env;
 
 export default function MoviesGenre() {
   const [movieGenre, setMovieGenre] = useState([]);
-  const { pageState } = useCheckToken();
 
   useEffect(() => {
-    if (pageState) {
-      const GetMovieGenre = async () => {
-        const data = await useFetch(
-          `https://api.themoviedb.org/3/genre/movie/list?api_key=${VITE_API_KEY}&language=en-US`
-        );
+    const GetMovieGenre = async () => {
+      const data = await useFetch(
+        `https://api.themoviedb.org/3/genre/movie/list?api_key=${VITE_API_KEY}&language=en-US`
+      );
 
-        setMovieGenre(data.genres);
-      };
+      setMovieGenre(data.genres);
+    };
 
-      GetMovieGenre();
-    }
-  }, [pageState]);
+    GetMovieGenre();
+  }, []);
 
   const moviesGenresArr = movieGenre?.map((genre) => {
     return (

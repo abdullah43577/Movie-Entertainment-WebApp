@@ -39,7 +39,7 @@ export default function MovieDetail() {
 
   useEffect(() => {
     const GetCredits = async () => {
-      const data = useFetch(
+      const data = await useFetch(
         `https://api.themoviedb.org/3/movie/${
           movieId || id
         }/credits?api_key=${VITE_API_KEY}&language=en-US`
@@ -53,7 +53,7 @@ export default function MovieDetail() {
   // get similar movies
   useEffect(() => {
     const GetSimilarMovies = async () => {
-      const data = useFetch(
+      const data = await useFetch(
         `https://api.themoviedb.org/3/movie/${id}/similar?api_key=${VITE_API_KEY}&language=en-US&page=1`
       );
       const result = isSmallScreen

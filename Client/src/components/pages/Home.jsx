@@ -18,23 +18,23 @@ export default function Home() {
     const FetchMovies = async () => {
       setIsLoading(true);
 
-      const trendRes = useFetch(
+      const trendRes = await useFetch(
         `https://api.themoviedb.org/3/trending/movie/week?api_key=${VITE_API_KEY}`
       );
 
-      const popularRes = useFetch(
+      const popularRes = await useFetch(
         `https://api.themoviedb.org/3/movie/popular?api_key=${VITE_API_KEY}&language=en-US&page=1`
       );
 
-      const nowPlayingMoviesRes = useFetch(
+      const nowPlayingMoviesRes = await useFetch(
         `https://api.themoviedb.org/3/movie/now_playing?api_key=${VITE_API_KEY}&language=en-US&page=1`
       );
 
-      const upComingRes = useFetch(
+      const upComingRes = await useFetch(
         `https://api.themoviedb.org/3/movie/upcoming?api_key=${VITE_API_KEY}&language=en-US&page=1`
       );
 
-      const topRatedRes = useFetch(
+      const topRatedRes = await useFetch(
         `https://api.themoviedb.org/3/movie/top_rated?api_key=${VITE_API_KEY}&language=en-US&page=1`
       );
 

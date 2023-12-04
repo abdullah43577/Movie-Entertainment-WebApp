@@ -1,9 +1,9 @@
 const jwt = require('jsonwebtoken');
+const User = require('../model/User');
 
 // implement a middleware that checks the validity of the token-cookie stored in the browser
-const checkAuthToken = (req, res, next) => {
+const checkAuthToken = async (req, res, next) => {
   const { authorization } = req.headers;
-  console.log(authorization);
 
   if (!authorization) {
     return res.status(401).json({ error: 'Authorization token required' });
@@ -13,10 +13,8 @@ const checkAuthToken = (req, res, next) => {
 
   try {
     const { id } = jwt.verify(token, 'movie_database_secret');
-    if (id) {
-      // res.status(200).json({ message: 'Token Valid!', user: id });
-      next();
-    }
+    req.user = await User.findById(id); // find user with corresponding ID
+    next();
   } catch (err) {
     console.log(err);
     res.status(401).json({ error: 'Request not Authorized' });

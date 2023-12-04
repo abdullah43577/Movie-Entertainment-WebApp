@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import movieClip from "../../../icons folder/movieClip.svg";
 import FullPagination from "../../helper/FullPagination";
 import { useFetch } from "../../hooks/useFetch";
-const { VITE_API_kEY } = import.meta.env;
+const { VITE_API_KEY } = import.meta.env;
 
 export default function TrendsLayout() {
   const [movies, setMovies] = useState([]);
@@ -14,7 +14,7 @@ export default function TrendsLayout() {
       setIsLoading(true);
 
       const data = await useFetch(
-        `https://api.themoviedb.org/3/trending/tv/week?api_key=${VITE_API_kEY}`
+        `https://api.themoviedb.org/3/trending/tv/week?api_key=${VITE_API_KEY}`
       );
       setMovies(data.results);
 

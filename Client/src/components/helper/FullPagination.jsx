@@ -27,9 +27,7 @@ export default function Pagination({ moviesArr, isLoading }) {
       {isLoading ? (
         <Loader isLoading={isLoading} />
       ) : (
-        <div className="movies-container movies-container-trends">
-          {currentItems}
-        </div>
+        <div className="genreMovie">{currentItems}</div>
       )}
 
       <ReactPaginate

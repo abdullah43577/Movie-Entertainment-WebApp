@@ -15,9 +15,6 @@ export default function TVShowDetail() {
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingImage, setIsLoadingImage] = useState(true);
   const [voteAvg, setVoteAvg] = useState(0);
-  const [similarMovies, setSimilarMovies] = useState([]);
-  const isSmallScreen = useMediaQuery("(max-width:480px)");
-  const navigate = useNavigate();
 
   const handleImageLoad = () => setIsLoadingImage(false);
 
@@ -51,68 +48,6 @@ export default function TVShowDetail() {
 
     GetCredits();
   }, [id, tvId]);
-
-  // get similar movies
-  useEffect(() => {
-    const GetSimilarMovies = async () => {
-      const data = useFetch(
-        `https://api.themoviedb.org/3/tv/${id}/similar?api_key=${VITE_API_KEY}&language=en-US&page=1`
-      );
-      const result = isSmallScreen
-        ? data.results.slice(0, 5)
-        : data.results.slice(0, 10);
-      setSimilarMovies(result);
-    };
-
-    GetSimilarMovies();
-  }, [id, tvId, isSmallScreen]);
-
-  const Navigator = function (id) {
-    // Replace the current URL with this
-    navigate(`tv/similar/${id}`, { replace: true });
-  };
-
-  const similarMoviesArr = similarMovies?.map((movie) => {
-    const releaseDate =
-      movie.release_date?.slice(0, 4) || movie.first_air_date?.slice(0, 4);
-
-    return (
-      <Link
-        to={`tv/similar/${movie.id}`}
-        key={movie.id}
-        className="link"
-        onClick={() => Navigator(movie.id)}
-        replace
-      >
-        <div className="card_element relative mx-auto h-[250px] rounded-md bg-nav lg:h-[300px]">
-          <img
-            src={`https://image.tmdb.org/t/p/original/${
-              movie.backdrop_path || movie.poster_path
-            }`}
-            alt={movie.title}
-            className="h-full w-full rounded-lg"
-          />
-          <div className="overlay absolute left-0 top-0 h-full w-full rounded-lg bg-[rgba(0,0,0,0.4)]"></div>
-          <div className="info_container absolute bottom-6 left-4 text-white">
-            <div className="year-container flex items-center gap-3">
-              <p>{releaseDate}</p>
-              <p className="flex items-center gap-1">
-                <img
-                  src={movieClip}
-                  alt="movie clip element"
-                  className="w-4 before:content-['.']"
-                />
-                <span>Movie</span>
-              </p>
-            </div>
-            <div className="title text-2xl font-medium">
-              {movie.title || movie.name}
-            </div>
-          </div>
-        </div>
-      </Link>
-    );
-  });
 
   return (
     <>
@@ -266,19 +201,6 @@ export default function TVShowDetail() {
               )}
             </div>
           </div>
-        </div>
-      </div>
-
-      <div className="similar-movies">
-        <h3
-          className={`my-8 text-2xl font-bold ${
-            isSmallScreen ? "text-center" : "text-left"
-          }`}
-        >
-          {isSmallScreen ? "Top 5 Similar Movies" : "Top 10 Similar Movies"}
-        </h3>
-        <div className="similar-movies-container genreMovie flex flex-wrap gap-[0.5rem]">
-          {isLoading ? <Loader isLoading={isLoading} /> : similarMoviesArr}
         </div>
       </div>
     </>

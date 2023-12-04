@@ -1,40 +1,29 @@
-import { useEffect, useState } from "react";
-import { SERVER } from "../helper/helperModules";
-import { useNavigate } from "react-router-dom";
+const { VITE_API_SERVER } = import.meta.env;
 
-export const useCheckToken = function () {
-  const [pageState, setPageState] = useState(false);
-  const nav = useNavigate();
+// check to see if the user is still logged in
+export const useCheckToken = async function () {
+  try {
+    // get token from localStorage
+    const { user_token } = localStorage;
+    const formattedToken = user_token?.replace(/['"]+/g, "");
 
-  useEffect(() => {
-    // check the validity of jsonwebtoken
-    async function checkToken() {
-      try {
-        // check if the token is valid
-        const { user_token } = localStorage;
-        const formatedToken = user_token?.replace(/['"]+/g, "");
+    if (!user_token) return false;
 
-        const res = await fetch(`${SERVER}/checkToken`, {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${formatedToken}`,
-          },
-          credentials: "include",
-        });
+    const checkToken = await fetch(`${VITE_API_SERVER}/checkToken`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${formattedToken}`,
+      },
+    });
 
-        const data = await res.json();
-        if (data.error) {
-          nav("/login");
-        } else {
-          setPageState(true);
-        }
-      } catch (err) {
-        console.log(err);
-      }
+    const data = await checkToken.json();
+
+    if (data.error) {
+      return false;
     }
 
-    checkToken();
-  }, []);
-
-  return { pageState };
+    return true;
+  } catch (err) {
+    console.log(err);
+  }
 };

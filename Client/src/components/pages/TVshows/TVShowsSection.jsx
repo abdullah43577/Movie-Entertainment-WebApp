@@ -15,23 +15,23 @@ export default function TVShowsSection() {
 
   useEffect(() => {
     const FetchTVShows = async () => {
-      const trendRes = useFetch(
+      const trendRes = await useFetch(
         `https://api.themoviedb.org/3/trending/tv/week?api_key=${VITE_API_KEY}`
       );
 
-      const popularRes = useFetch(
+      const popularRes = await useFetch(
         `https://api.themoviedb.org/3/tv/popular?api_key=${VITE_API_KEY}&language=en-US&page=1`
       );
 
-      const airingRes = useFetch(
+      const airingRes = await useFetch(
         `https://api.themoviedb.org/3/tv/airing_today?api_key=${VITE_API_KEY}&language=en-US&page=1`
       );
 
-      const onAirRes = useFetch(
+      const onAirRes = await useFetch(
         `https://api.themoviedb.org/3/tv/on_the_air?api_key=${VITE_API_KEY}&language=en-US&page=1`
       );
 
-      const topRatedRes = useFetch(
+      const topRatedRes = await useFetch(
         `https://api.themoviedb.org/3/tv/top_rated?api_key=${VITE_API_KEY}&language=en-US&page=1`
       );
 

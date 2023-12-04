@@ -74,7 +74,8 @@ const login_user_post = async (req, res) => {
 };
 
 const checkToken = (req, res) => {
-  res.status(200).json({ message: 'Token Valid!' });
+  const userId = req.user;
+  res.status(200).json({ message: 'Token Valid!', user: userId });
 };
 
 const logout_user_get = (req, res) => {
