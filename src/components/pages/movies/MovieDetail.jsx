@@ -83,7 +83,7 @@ export default function MovieDetail() {
                   src={movieClip}
                   alt="movie clip element"
                   className="w-4 before:content-['.']"
-                  loading='lazy'
+                  loading="lazy"
                 />
                 <span>Movie</span>
               </p>
@@ -117,7 +117,6 @@ export default function MovieDetail() {
               imageLoading ? "hidden" : "block"
             }`}
             onLoad={handleImageLoad}
-            loading="lazy"
           />
         </div>
 

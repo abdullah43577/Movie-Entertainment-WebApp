@@ -7,25 +7,29 @@ import { useFetch } from "../../helper/useFetch";
 const { VITE_API_KEY } = import.meta.env;
 
 export default function TVShowDetail() {
-  const { tvId } = useParams();
+  const { id, tvId } = useParams();
   const [isLoadingImage, setIsLoadingImage] = useState(true);
   const [voteAvg, setVoteAvg] = useState(0);
 
   const handleImageLoad = () => setIsLoadingImage(false);
 
   const { isLoading: isLoadingTvShowDetail, data: tvShowDetail } = useFetch(
-    `https://api.themoviedb.org/3/tv/${tvId}?api_key=${VITE_API_KEY}&language=en-US`,
-    tvId
+    `https://api.themoviedb.org/3/tv/${
+      id || tvId
+    }?api_key=${VITE_API_KEY}&language=en-US`,
+    tvId || id
   );
 
   const { isLoading: isLoadingTvCredits, data: movieCredits } = useFetch(
-    `https://api.themoviedb.org/3/tv/${tvId}/credits?api_key=${VITE_API_KEY}&language=en-US`,
+    `https://api.themoviedb.org/3/tv/${
+      id || tvId
+    }/credits?api_key=${VITE_API_KEY}&language=en-US`,
     "getTVCredits"
   );
 
   useEffect(() => {
     if (tvShowDetail) setVoteAvg(tvShowDetail.vote_average);
-  }, [tvId, tvShowDetail]);
+  }, [id, tvId, tvShowDetail]);
 
   return (
     <>
@@ -46,7 +50,6 @@ export default function TVShowDetail() {
               isLoadingImage ? "hidden" : "block"
             }`}
             onLoad={handleImageLoad}
-            loading="lazy"
           />
         </div>
 
